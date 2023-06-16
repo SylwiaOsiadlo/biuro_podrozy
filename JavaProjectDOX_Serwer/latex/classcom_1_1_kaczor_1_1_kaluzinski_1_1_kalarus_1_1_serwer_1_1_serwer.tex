@@ -1,0 +1,100 @@
+\hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer}{}\doxysection{com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Serwer Class Reference}
+\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer}\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a8eb15059249b8926ee6ea59728d1435d}{set\+Sleep}} (boolean issleeping)
+\item 
+\mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a456ae1250f74e45e29f4a6a9449a9aff}{Serwer}} (int port)  throws IOException  
+\item 
+void \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a83f0cfba2c9dad9d263e158e30abc1e0}{active\+Waiting}} ()  throws IOException   
+\item 
+void \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a6d94bec7237b85d29d54c042c9ef07ae}{stop\+Waiting}} ()
+\item 
+void \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a31371381904dd052925236723244d07c}{wait\+To\+Stop}} ()
+\item 
+void \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a08201db9d86414a06675e56f8e063902}{Close}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_ad36c14fed0259efb65bd32b826f58f2a}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_ad36c14fed0259efb65bd32b826f58f2a}} 
+Server\+Socket {\bfseries sock}
+\item 
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a56d967f9774b82fdc4fc4c5d1064c6e4}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a56d967f9774b82fdc4fc4c5d1064c6e4}} 
+Atomic\+Boolean {\bfseries isworking} = new Atomic\+Boolean(true)
+\item 
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_afefb0af7da91d1d6215722449bc1e547}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_afefb0af7da91d1d6215722449bc1e547}} 
+Atomic\+Boolean {\bfseries issleeping} = new Atomic\+Boolean(false)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Klasa serwera służąca do przyjmowania nowych połączeń od pracowników (klientów aplikacji) oraz tworząca nowe wątki do ich obsługi. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a456ae1250f74e45e29f4a6a9449a9aff}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a456ae1250f74e45e29f4a6a9449a9aff}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer}!Serwer@{Serwer}}
+\index{Serwer@{Serwer}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer}}
+\doxysubsubsection{\texorpdfstring{Serwer()}{Serwer()}}
+{\footnotesize\ttfamily com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Serwer.\+Serwer (\begin{DoxyParamCaption}\item[{int}]{port }\end{DoxyParamCaption}) throws IOException}
+
+Konstruktor ustawiający nowe gniazdo dla podanego w paramterze portu przy tworzeniu obiektu. 
+\begin{DoxyParams}{Parameters}
+{\em port} & port \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em IOException} & \\
+\hline
+\end{DoxyExceptions}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a83f0cfba2c9dad9d263e158e30abc1e0}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a83f0cfba2c9dad9d263e158e30abc1e0}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer}!activeWaiting@{activeWaiting}}
+\index{activeWaiting@{activeWaiting}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer}}
+\doxysubsubsection{\texorpdfstring{activeWaiting()}{activeWaiting()}}
+{\footnotesize\ttfamily void com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Serwer.\+active\+Waiting (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) throws IOException}
+
+Metoda służąca do przyjmowania nowych połączeń i akceptowania ich. 
+\begin{DoxyExceptions}{Exceptions}
+{\em IOException} & \\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a08201db9d86414a06675e56f8e063902}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a08201db9d86414a06675e56f8e063902}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer}!Close@{Close}}
+\index{Close@{Close}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer}}
+\doxysubsubsection{\texorpdfstring{Close()}{Close()}}
+{\footnotesize\ttfamily void com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Serwer.\+Close (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Metoda zamyka wszystkie aktywne połączenia klientów aplikacji z serwerem. \mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a8eb15059249b8926ee6ea59728d1435d}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a8eb15059249b8926ee6ea59728d1435d}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer}!setSleep@{setSleep}}
+\index{setSleep@{setSleep}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer}}
+\doxysubsubsection{\texorpdfstring{setSleep()}{setSleep()}}
+{\footnotesize\ttfamily void com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Serwer.\+set\+Sleep (\begin{DoxyParamCaption}\item[{boolean}]{issleeping }\end{DoxyParamCaption})}
+
+Metoda służąca do usypiania pętli akceptującej nowe połączenia. 
+\begin{DoxyParams}{Parameters}
+{\em issleeping} & wartość true usypia pętlę ~\newline
+ \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a6d94bec7237b85d29d54c042c9ef07ae}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a6d94bec7237b85d29d54c042c9ef07ae}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer}!stopWaiting@{stopWaiting}}
+\index{stopWaiting@{stopWaiting}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer}}
+\doxysubsubsection{\texorpdfstring{stopWaiting()}{stopWaiting()}}
+{\footnotesize\ttfamily void com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Serwer.\+stop\+Waiting (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Metoda wyłączająca aktywne oczekiwanie na nadchodzące połączenia od pracowników (klientów aplikacji). \mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a31371381904dd052925236723244d07c}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer_a31371381904dd052925236723244d07c}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer}!waitToStop@{waitToStop}}
+\index{waitToStop@{waitToStop}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer}}
+\doxysubsubsection{\texorpdfstring{waitToStop()}{waitToStop()}}
+{\footnotesize\ttfamily void com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Serwer.\+wait\+To\+Stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Metoda wywoływana w celu przejścia programu w stan oczekiwania do zamknięcia 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/micha/\+One\+Drive/\+Pulpit/\+Studia/\+Semestr IV/\+Programowanie\+\_\+\+JAVA/\+Projekt/\+Projekt\+\_\+\+Przemek\+\_\+\+Grzesiek\+\_\+\+Michal/\+Serwer/src/com/\+Kaczor/\+Kaluzinski/\+Kalarus/\+Serwer/Serwer.\+java\end{DoxyCompactItemize}

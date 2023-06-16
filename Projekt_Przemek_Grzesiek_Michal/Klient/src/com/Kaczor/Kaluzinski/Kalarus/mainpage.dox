@@ -1,0 +1,14 @@
+/** \mainpage Strona glowna aplikacji Klienckiej projektu z przedmiotu programowanie obiektowe w jezyku Java
+ * Temat projektu: "Aplikacja biura podrozy"<br><br>
+ *
+ * Krotki opis projektu: <br>
+ * Aplikacja podzielona na panel administratora oraz uzytkownika, ktora pozwala w podstawowy sposob zarzadzac biurem podrozy. <br>
+ * Strona klienta sluzy do przeprowadzania wszystkich operacji zwiazanych z zarzadzaniem biurem podrozy. <br>
+ * Za jej pomoca wysylamy zadania do serwera o wykonanie odpowiednich operacji na informacjach znajdujacych sie w lokalnej bazie danych. <br><br>
+ * Autorzy projektu:<br>
+ * -Przemyslaw Kaluzinski (91271) <br>
+ * -Grzegorz Kalarus (91269) <br>
+ * -Michal Kaczor (91268) <br><br>
+ *
+ * Grupa: 2ID13A
+ */

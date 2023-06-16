@@ -1,0 +1,133 @@
+\hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager}{}\doxysection{com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Worker\+Manager Class Reference}
+\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager}\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager}}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_worker}{Worker}} \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_aed0a0dae68541764e6e0f629e676df8c}{get\+Worker}} (int id\+Worker)
+\item 
+static \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_worker}{Worker}} \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_ab4289e9815c6d707d8f3603a86595c4e}{get\+Worker}} (int id\+Office, @Not\+Null String pesel)
+\item 
+static \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_worker}{Worker}} \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_ac0d408c6ecfae6890e2b2355cb13e87a}{get\+Worker}} (@Not\+Null String nick)
+\item 
+static boolean \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_a066af316c12261ad3524f1c944f87727}{is\+Worker\+Exist}} (@Not\+Null String nick)
+\item 
+static boolean \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_ac41500b2c16ce97d47fc1ef7dfa84ebd}{add\+Worker}} (@Not\+Null \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_worker}{Worker}} wo)
+\item 
+static boolean \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_aa2e4d3f2c02a8385768b194cbb7db938}{remove\+Worker}} (int id)
+\item 
+static boolean \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_aab871d864658dcf985d64ec639ec1bb1}{update\+Worker}} (@Not\+Null \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_worker}{Worker}} wo)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager}{Data\+Base\+Manager}} Klasa zawierająca metody służące do wykonywania operacji na pracowniku w bazie danych 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_ac41500b2c16ce97d47fc1ef7dfa84ebd}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_ac41500b2c16ce97d47fc1ef7dfa84ebd}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager}!addWorker@{addWorker}}
+\index{addWorker@{addWorker}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager}}
+\doxysubsubsection{\texorpdfstring{addWorker()}{addWorker()}}
+{\footnotesize\ttfamily static boolean com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Worker\+Manager.\+add\+Worker (\begin{DoxyParamCaption}\item[{@Not\+Null \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_worker}{Worker}}}]{wo }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda dodaje pracownika do bazy danych. 
+\begin{DoxyParams}{Parameters}
+{\em wo} & obiekt z danymi \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwraca true jeżeli się powiodło 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_ac0d408c6ecfae6890e2b2355cb13e87a}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_ac0d408c6ecfae6890e2b2355cb13e87a}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager}!getWorker@{getWorker}}
+\index{getWorker@{getWorker}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager}}
+\doxysubsubsection{\texorpdfstring{getWorker()}{getWorker()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_worker}{Worker}} com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Worker\+Manager.\+get\+Worker (\begin{DoxyParamCaption}\item[{@Not\+Null String}]{nick }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda zwracająca pracownika o podanym nicku. 
+\begin{DoxyParams}{Parameters}
+{\em nick} & Nick pracownika \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwraca null jeżeli nie znaleziono pracownika o podanym nicku 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_ab4289e9815c6d707d8f3603a86595c4e}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_ab4289e9815c6d707d8f3603a86595c4e}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager}!getWorker@{getWorker}}
+\index{getWorker@{getWorker}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager}}
+\doxysubsubsection{\texorpdfstring{getWorker()}{getWorker()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_worker}{Worker}} com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Worker\+Manager.\+get\+Worker (\begin{DoxyParamCaption}\item[{int}]{id\+Office,  }\item[{@Not\+Null String}]{pesel }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda zwracająca pracownika o danym id i peselu. 
+\begin{DoxyParams}{Parameters}
+{\em id\+Office} & id biura \\
+\hline
+{\em pesel} & pesel pracownika \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwróci null jeżeli nie znaleziono takiego pracownika 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_aed0a0dae68541764e6e0f629e676df8c}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_aed0a0dae68541764e6e0f629e676df8c}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager}!getWorker@{getWorker}}
+\index{getWorker@{getWorker}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager}}
+\doxysubsubsection{\texorpdfstring{getWorker()}{getWorker()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_worker}{Worker}} com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Worker\+Manager.\+get\+Worker (\begin{DoxyParamCaption}\item[{int}]{id\+Worker }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda zwracająca pracownika o podanym id. 
+\begin{DoxyParams}{Parameters}
+{\em id\+Worker} & id pracownika \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwraca null jeżeli nie znaleziono pracownika 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_a066af316c12261ad3524f1c944f87727}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_a066af316c12261ad3524f1c944f87727}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager}!isWorkerExist@{isWorkerExist}}
+\index{isWorkerExist@{isWorkerExist}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager}}
+\doxysubsubsection{\texorpdfstring{isWorkerExist()}{isWorkerExist()}}
+{\footnotesize\ttfamily static boolean com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Worker\+Manager.\+is\+Worker\+Exist (\begin{DoxyParamCaption}\item[{@Not\+Null String}]{nick }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda sprawdzająca czy pracownik o podanym nicku istnieje. 
+\begin{DoxyParams}{Parameters}
+{\em nick} & Nick pracownika \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwraca true jeżeli pracownik istnieje lub false jesli nie istnieje 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_aa2e4d3f2c02a8385768b194cbb7db938}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_aa2e4d3f2c02a8385768b194cbb7db938}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager}!removeWorker@{removeWorker}}
+\index{removeWorker@{removeWorker}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager}}
+\doxysubsubsection{\texorpdfstring{removeWorker()}{removeWorker()}}
+{\footnotesize\ttfamily static boolean com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Worker\+Manager.\+remove\+Worker (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda usuwa pracownika o podanym id z bazy danych. 
+\begin{DoxyParams}{Parameters}
+{\em id} & identyfikator pracownika \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwraca true jeżeli usunięto pracownika 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_aab871d864658dcf985d64ec639ec1bb1}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_worker_manager_aab871d864658dcf985d64ec639ec1bb1}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager}!updateWorker@{updateWorker}}
+\index{updateWorker@{updateWorker}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.WorkerManager}}
+\doxysubsubsection{\texorpdfstring{updateWorker()}{updateWorker()}}
+{\footnotesize\ttfamily static boolean com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Worker\+Manager.\+update\+Worker (\begin{DoxyParamCaption}\item[{@Not\+Null \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_worker}{Worker}}}]{wo }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda aktualizuje pracownika o podanym id w obiekcie. 
+\begin{DoxyParams}{Parameters}
+{\em wo} & obiekt zawierający id klienta i dane do aktualizacji \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwraca true jeżeli aktualizacja się powiodła 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/micha/\+One\+Drive/\+Pulpit/\+Studia/\+Semestr IV/\+Programowanie\+\_\+\+JAVA/\+Projekt/\+Projekt\+\_\+\+Przemek\+\_\+\+Grzesiek\+\_\+\+Michal/\+Serwer/src/com/\+Kaczor/\+Kaluzinski/\+Kalarus/\+Serwer/\+Database/Data\+Base\+Manager.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,101 @@
+\hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager}{}\doxysection{com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Trip\+Manager Class Reference}
+\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager}\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager}}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static boolean \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager_acf5841ce6feab4696cc4dcc03e18cdda}{add\+Trip}} (@Not\+Null \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_trip}{Trip}} tp)
+\item 
+static boolean \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager_aeec6fb901d2856009816e22b8cb9d960}{remove\+Trip}} (int id\+Trip)
+\item 
+static \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_trip}{Trip}} \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager_a7b8dfe1007b75a0b3501c9ce569149bf}{get\+Trip}} (int id\+Trip)
+\item 
+static \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_trip}{Trip}}\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager_aeae2dff65ebfd279788d00f8d593b621}{get\+All\+Trips}} (int id\+Office, @Not\+Null \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_communication_1_1_trip}{com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Communication.\+Trip}} tr)
+\item 
+static boolean \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager_a1ae2df2fbc66e425247b145f3844d574}{update\+Trip}} (@Not\+Null \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_trip}{Trip}} pay)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager}{Data\+Base\+Manager}} Klasa, w której znajdują się wszystkie metody powiązane z obsługą wycieczek w bazie danych. 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager_acf5841ce6feab4696cc4dcc03e18cdda}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager_acf5841ce6feab4696cc4dcc03e18cdda}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager}!addTrip@{addTrip}}
+\index{addTrip@{addTrip}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager}}
+\doxysubsubsection{\texorpdfstring{addTrip()}{addTrip()}}
+{\footnotesize\ttfamily static boolean com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Trip\+Manager.\+add\+Trip (\begin{DoxyParamCaption}\item[{@Not\+Null \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_trip}{Trip}}}]{tp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda dodaje wycieczkę do bazy danych. 
+\begin{DoxyParams}{Parameters}
+{\em tp} & obiekt z danymi \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwraca true jeżeli dodanie się powiodło 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager_aeae2dff65ebfd279788d00f8d593b621}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager_aeae2dff65ebfd279788d00f8d593b621}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager}!getAllTrips@{getAllTrips}}
+\index{getAllTrips@{getAllTrips}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager}}
+\doxysubsubsection{\texorpdfstring{getAllTrips()}{getAllTrips()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_trip}{Trip}} \mbox{[}$\,$\mbox{]} com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Trip\+Manager.\+get\+All\+Trips (\begin{DoxyParamCaption}\item[{int}]{id\+Office,  }\item[{@Not\+Null \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_communication_1_1_trip}{com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Communication.\+Trip}}}]{tr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda zwraca wszystkie wycieczki powiązane z biurem, i spełniające wymagania zawarte w \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_trip}{Trip}}. 
+\begin{DoxyParams}{Parameters}
+{\em id\+Office} & id biura \\
+\hline
+{\em tr} & obiekt z danymi \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwraca tablice obiektów, lub null jeżeli wystąpił błąd 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager_a7b8dfe1007b75a0b3501c9ce569149bf}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager_a7b8dfe1007b75a0b3501c9ce569149bf}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager}!getTrip@{getTrip}}
+\index{getTrip@{getTrip}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager}}
+\doxysubsubsection{\texorpdfstring{getTrip()}{getTrip()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_trip}{Trip}} com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Trip\+Manager.\+get\+Trip (\begin{DoxyParamCaption}\item[{int}]{id\+Trip }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda zwraca wycieczkę o podanym identyfikatorze. 
+\begin{DoxyParams}{Parameters}
+{\em id\+Trip} & id wycieczki \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwraca null jeżeli znalezienie wycieczki się nie powiodło 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager_aeec6fb901d2856009816e22b8cb9d960}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager_aeec6fb901d2856009816e22b8cb9d960}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager}!removeTrip@{removeTrip}}
+\index{removeTrip@{removeTrip}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager}}
+\doxysubsubsection{\texorpdfstring{removeTrip()}{removeTrip()}}
+{\footnotesize\ttfamily static boolean com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Trip\+Manager.\+remove\+Trip (\begin{DoxyParamCaption}\item[{int}]{id\+Trip }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda usuwa wycieczkę z bazy danych o podanym identyfikatorze. 
+\begin{DoxyParams}{Parameters}
+{\em id\+Trip} & id wycieczki \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwraca true jeżeli usunięto wycieczkę 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager_a1ae2df2fbc66e425247b145f3844d574}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_trip_manager_a1ae2df2fbc66e425247b145f3844d574}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager}!updateTrip@{updateTrip}}
+\index{updateTrip@{updateTrip}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.TripManager}}
+\doxysubsubsection{\texorpdfstring{updateTrip()}{updateTrip()}}
+{\footnotesize\ttfamily static boolean com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Trip\+Manager.\+update\+Trip (\begin{DoxyParamCaption}\item[{@Not\+Null \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_trip}{Trip}}}]{pay }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda aktualizuje wycieczkę danymi zawartymi w obiekcie. 
+\begin{DoxyParams}{Parameters}
+{\em pay} & obiekt z danymi \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwraca true jeżeli aktualizacja przebiegła pomyślnie 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/micha/\+One\+Drive/\+Pulpit/\+Studia/\+Semestr IV/\+Programowanie\+\_\+\+JAVA/\+Projekt/\+Projekt\+\_\+\+Przemek\+\_\+\+Grzesiek\+\_\+\+Michal/\+Serwer/src/com/\+Kaczor/\+Kaluzinski/\+Kalarus/\+Serwer/\+Database/Data\+Base\+Manager.\+java\end{DoxyCompactItemize}

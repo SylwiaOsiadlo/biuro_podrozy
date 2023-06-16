@@ -1,0 +1,105 @@
+\hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager}{}\doxysection{com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Payment\+Manager Class Reference}
+\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager}\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager}}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static boolean \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_a03d36d83748a01c02216c21d8139d0c7}{add\+Payment}} (@Not\+Null \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_payment}{Payment}} pa)
+\item 
+static \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_payment}{Payment}} \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_aadda869e83aa41b224d1b2d27ab9f69d}{get\+Payment}} (int id\+Payment)
+\item 
+static \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_payment}{Payment}} \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_ad24711c13cbb5d61217d6d92a36e1103}{get\+Payment\+By\+Aggrement}} (int id)
+\item 
+static boolean \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_a7c9bfbf238e6377f4c8649f621929ba5}{remove\+Payment}} (int id\+Payment)
+\item 
+static boolean \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_aa322756c9785d55f2626ef97f7c11cb2}{update\+Payment}} (@Not\+Null \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_payment}{Payment}} pay)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_acf74226723bc32711bfeca18b72677be}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_acf74226723bc32711bfeca18b72677be}} 
+static Object {\bfseries synch} = new Object()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager}{Data\+Base\+Manager}} Klasa posiada wszystkie metody pozwalające operować na płatnościach w bazie danych. 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_a03d36d83748a01c02216c21d8139d0c7}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_a03d36d83748a01c02216c21d8139d0c7}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager}!addPayment@{addPayment}}
+\index{addPayment@{addPayment}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager}}
+\doxysubsubsection{\texorpdfstring{addPayment()}{addPayment()}}
+{\footnotesize\ttfamily static boolean com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Payment\+Manager.\+add\+Payment (\begin{DoxyParamCaption}\item[{@Not\+Null \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_payment}{Payment}}}]{pa }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda dodaje płatność do bazy danych. 
+\begin{DoxyParams}{Parameters}
+{\em pa} & obiekt z danymi \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwraca true jeżeli dodano płatność prawidłowo 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_aadda869e83aa41b224d1b2d27ab9f69d}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_aadda869e83aa41b224d1b2d27ab9f69d}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager}!getPayment@{getPayment}}
+\index{getPayment@{getPayment}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager}}
+\doxysubsubsection{\texorpdfstring{getPayment()}{getPayment()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_payment}{Payment}} com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Payment\+Manager.\+get\+Payment (\begin{DoxyParamCaption}\item[{int}]{id\+Payment }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda zwraca płatność o podanym identyfikatorze. 
+\begin{DoxyParams}{Parameters}
+{\em id\+Payment} & id płatności \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwraca null jeżeli nieznaleziono danej płatności 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_ad24711c13cbb5d61217d6d92a36e1103}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_ad24711c13cbb5d61217d6d92a36e1103}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager}!getPaymentByAggrement@{getPaymentByAggrement}}
+\index{getPaymentByAggrement@{getPaymentByAggrement}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager}}
+\doxysubsubsection{\texorpdfstring{getPaymentByAggrement()}{getPaymentByAggrement()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_payment}{Payment}} com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Payment\+Manager.\+get\+Payment\+By\+Aggrement (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda zwraca id płatności po kluczu obcym umowy. 
+\begin{DoxyParams}{Parameters}
+{\em id} & id umowy \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwraca null jeżeli nie znaleziono 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_a7c9bfbf238e6377f4c8649f621929ba5}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_a7c9bfbf238e6377f4c8649f621929ba5}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager}!removePayment@{removePayment}}
+\index{removePayment@{removePayment}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager}}
+\doxysubsubsection{\texorpdfstring{removePayment()}{removePayment()}}
+{\footnotesize\ttfamily static boolean com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Payment\+Manager.\+remove\+Payment (\begin{DoxyParamCaption}\item[{int}]{id\+Payment }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda usuwa płatność z bazy danych. 
+\begin{DoxyParams}{Parameters}
+{\em id\+Payment} & id płatności \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwraca true jeżeli usunięcie się powiodło 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_aa322756c9785d55f2626ef97f7c11cb2}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_data_base_manager_1_1_payment_manager_aa322756c9785d55f2626ef97f7c11cb2}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager}!updatePayment@{updatePayment}}
+\index{updatePayment@{updatePayment}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.DataBaseManager.PaymentManager}}
+\doxysubsubsection{\texorpdfstring{updatePayment()}{updatePayment()}}
+{\footnotesize\ttfamily static boolean com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Data\+Base\+Manager.\+Payment\+Manager.\+update\+Payment (\begin{DoxyParamCaption}\item[{@Not\+Null \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_payment}{Payment}}}]{pay }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda aktualizuje płatność o podane w obiekcie dane. 
+\begin{DoxyParams}{Parameters}
+{\em pay} & obiekt z danymi \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+zwraca true jeżeli aktualizacja się powiodła 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/micha/\+One\+Drive/\+Pulpit/\+Studia/\+Semestr IV/\+Programowanie\+\_\+\+JAVA/\+Projekt/\+Projekt\+\_\+\+Przemek\+\_\+\+Grzesiek\+\_\+\+Michal/\+Serwer/src/com/\+Kaczor/\+Kaluzinski/\+Kalarus/\+Serwer/\+Database/Data\+Base\+Manager.\+java\end{DoxyCompactItemize}

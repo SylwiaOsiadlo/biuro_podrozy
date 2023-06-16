@@ -1,0 +1,9 @@
+var searchData=
+[
+  ['waittostop_231',['waitToStop',['../classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client.html#a7a9b5d62b8c6304e09a5848c219af774',1,'com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.Client.waitToStop()'],['../classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_serwer.html#a31371381904dd052925236723244d07c',1,'com.Kaczor.Kaluzinski.Kalarus.Serwer.Serwer.waitToStop()']]],
+  ['window_232',['Window',['../classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_window.html#a8fc982434bbb4f02257e232126ebcae0',1,'com::Kaczor::Kaluzinski::Kalarus::Serwer::Window']]],
+  ['worker_233',['Worker',['../classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_worker.html#a82b436470af5d92a5fa3a9b077a39ffe',1,'com::Kaczor::Kaluzinski::Kalarus::Serwer::Database::Worker']]],
+  ['workerlogin_234',['workerLogin',['../classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client.html#a6cf9443cc9a38ee4425b22770264c5b6',1,'com::Kaczor::Kaluzinski::Kalarus::Serwer::Client::Client']]],
+  ['workerlogin_235',['WorkerLogin',['../classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_communication_1_1_worker_login.html#aac71d03a731c521cc1bf8fb080e8e91c',1,'com::Kaczor::Kaluzinski::Kalarus::Communication::WorkerLogin']]],
+  ['workerloginreturn_236',['WorkerLoginReturn',['../classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_communication_1_1_worker_login_return.html#acf15a59b74d743fbb237d88aeeda816d',1,'com.Kaczor.Kaluzinski.Kalarus.Communication.WorkerLoginReturn.WorkerLoginReturn(@Nullable String message, boolean iserror)'],['../classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_communication_1_1_worker_login_return.html#a828ebab3a742136494b151004d05fe59',1,'com.Kaczor.Kaluzinski.Kalarus.Communication.WorkerLoginReturn.WorkerLoginReturn(@Nullable String message, boolean iserror, @NotNull WhatToDo what)']]]
+];

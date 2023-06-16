@@ -1,0 +1,107 @@
+\hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator}{}\doxysection{com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Client.\+Client\+Operator Class Reference}
+\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator}\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator}}
+Inheritance diagram for com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Client.\+Client\+Operator\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_ad788c4ca594749cd3fe3b0a860b3e2d9}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_ad788c4ca594749cd3fe3b0a860b3e2d9}} 
+void {\bfseries run} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static synchronized void \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_ac1b1fc0eb9e532be0deb29d0f6b99ba8}{add\+Operator}} (@Not\+Null \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client}{Client}} client)
+\item 
+static synchronized void \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_a55fbeb5ed28f927da4f4d2c650810f01}{close\+All}} ()
+\item 
+static synchronized boolean \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_aebcea6da0e50955cae98fc59625d11be}{is\+Can\+Delete}} (@Not\+Null String nick)
+\item 
+static synchronized boolean \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_ac74dbacdb09caae87abb0253491a6efc}{is\+Exist}} (@Not\+Null String nick)
+\item 
+static synchronized void \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_af3e7615b8dbe250655fbf19d128a7661}{remove\+Worker}} (@Not\+Null String nick)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_a0e99514691d9e09db330b45abdb18af3}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_a0e99514691d9e09db330b45abdb18af3}} 
+\mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client}{Client}} {\bfseries client}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_ada24494387695bfa97a7c85eb6d513e7}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_ada24494387695bfa97a7c85eb6d513e7}} 
+static List$<$ \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator}{Client\+Operator}} $>$ {\bfseries op} = new Array\+List$<$\mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator}{Client\+Operator}}$>$()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Kolejna klasa służąca do obsługi połączenia klienta z serwerem. Posiada listę, do której dodawani są wszyscy zaakceptowani i połączeni w obecnej chwili użytkownicy. Zawiera metody zarządzające tymi użytkownikami. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_ac1b1fc0eb9e532be0deb29d0f6b99ba8}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_ac1b1fc0eb9e532be0deb29d0f6b99ba8}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator}!addOperator@{addOperator}}
+\index{addOperator@{addOperator}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator}}
+\doxysubsubsection{\texorpdfstring{addOperator()}{addOperator()}}
+{\footnotesize\ttfamily static synchronized void com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Client.\+Client\+Operator.\+add\+Operator (\begin{DoxyParamCaption}\item[{@Not\+Null \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client}{Client}}}]{client }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Konstruktor służący do dodania zaakceptowanego klienta aplikacji do listy połączonych użytkowników. Tworzy dla niego osobny obiekt tej klasy, a co za tym idzie osobny wątek do jego obsługi. Przyjmuje jako parametr obiekt klasy \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client}{Client}}, w którym znajdują się informacje o połączonym użytkowniku. ~\newline
+ 
+\begin{DoxyParams}{Parameters}
+{\em client} & obiekt klasy \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client}{Client}}, który zawiera dane na temat podłączającego się do serwera pracownika \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_a55fbeb5ed28f927da4f4d2c650810f01}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_a55fbeb5ed28f927da4f4d2c650810f01}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator}!closeAll@{closeAll}}
+\index{closeAll@{closeAll}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator}}
+\doxysubsubsection{\texorpdfstring{closeAll()}{closeAll()}}
+{\footnotesize\ttfamily static synchronized void com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Client.\+Client\+Operator.\+close\+All (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda odpowiedzialna za zamknięcie wszystkich bieżących połączeń z serwerem. \mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_aebcea6da0e50955cae98fc59625d11be}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_aebcea6da0e50955cae98fc59625d11be}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator}!isCanDelete@{isCanDelete}}
+\index{isCanDelete@{isCanDelete}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator}}
+\doxysubsubsection{\texorpdfstring{isCanDelete()}{isCanDelete()}}
+{\footnotesize\ttfamily static synchronized boolean com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Client.\+Client\+Operator.\+is\+Can\+Delete (\begin{DoxyParamCaption}\item[{@Not\+Null String}]{nick }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda sprawdzająca czy można zamknąć połączenie pracownika o podanym loginie. Jeśli dany pracownik znajduje się na liście połączonych obecnie z serwerem użytkowników, to nie można go usunąć. 
+\begin{DoxyParams}{Parameters}
+{\em nick} & login pracownika, którego chcemy sprawdzić \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true, jeśli nie ma przeszkód do rozłączenia pracownika lub false, jeśli nie można tego zrobić 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_ac74dbacdb09caae87abb0253491a6efc}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_ac74dbacdb09caae87abb0253491a6efc}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator}!isExist@{isExist}}
+\index{isExist@{isExist}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator}}
+\doxysubsubsection{\texorpdfstring{isExist()}{isExist()}}
+{\footnotesize\ttfamily static synchronized boolean com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Client.\+Client\+Operator.\+is\+Exist (\begin{DoxyParamCaption}\item[{@Not\+Null String}]{nick }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda wykorzystująca metodę is\+Can\+Delete w celu sprawdzenia czy dany pracownik jest obecnie połączony z serwerem. 
+\begin{DoxyParams}{Parameters}
+{\em nick} & login pracownika, któego połączenie chcemy sprawdzić \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true, jeśli jest połączony lub false jeśli nie 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_af3e7615b8dbe250655fbf19d128a7661}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_client_1_1_client_operator_af3e7615b8dbe250655fbf19d128a7661}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator}!removeWorker@{removeWorker}}
+\index{removeWorker@{removeWorker}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Client.ClientOperator}}
+\doxysubsubsection{\texorpdfstring{removeWorker()}{removeWorker()}}
+{\footnotesize\ttfamily static synchronized void com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Client.\+Client\+Operator.\+remove\+Worker (\begin{DoxyParamCaption}\item[{@Not\+Null String}]{nick }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Metoda służąca do usunięcia pracownika o podanym loginie z listy podłączonych użytkowników. 
+\begin{DoxyParams}{Parameters}
+{\em nick} & login pracownika, którego połączenie chcemy zamknąć \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/micha/\+One\+Drive/\+Pulpit/\+Studia/\+Semestr IV/\+Programowanie\+\_\+\+JAVA/\+Projekt/\+Projekt\+\_\+\+Przemek\+\_\+\+Grzesiek\+\_\+\+Michal/\+Serwer/src/com/\+Kaczor/\+Kaluzinski/\+Kalarus/\+Serwer/\+Client/Client\+Operator.\+java\end{DoxyCompactItemize}

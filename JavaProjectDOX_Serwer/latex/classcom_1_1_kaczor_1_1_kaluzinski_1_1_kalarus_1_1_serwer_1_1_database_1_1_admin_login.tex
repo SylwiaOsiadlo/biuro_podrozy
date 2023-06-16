@@ -1,0 +1,78 @@
+\hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login}{}\doxysection{com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Admin\+Login Class Reference}
+\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login}\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login_a7136a193b9a7d769a226aea0ac4e4913}{Admin\+Login}} (@Not\+Null String nick, @Not\+Null String password)
+\item 
+String \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login_a320c144d0597c0d8939bc0e8e2678f8a}{get\+Nick}} ()
+\item 
+String \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login_a1c202342d7a0c1d064581b0c08c35b1a}{get\+Password}} ()
+\item 
+void \mbox{\hyperlink{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login_ae0afeea0cdc042471b108f1fce1129e6}{set\+Password}} (@Not\+Null String password)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login_ad349776afd0f0436c53d05fe09e29b62}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login_ad349776afd0f0436c53d05fe09e29b62}} 
+String {\bfseries nick}
+\item 
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login_afe0e7077007d22760d86cc3fdd86905b}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login_afe0e7077007d22760d86cc3fdd86905b}} 
+String {\bfseries password}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Klasa używana przez framework Hibernate. Służy do tworzenia tabeli przechowywującej dane logowania admina. Tworzy encje loginu oraz hasła. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login_a7136a193b9a7d769a226aea0ac4e4913}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login_a7136a193b9a7d769a226aea0ac4e4913}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin}!AdminLogin@{AdminLogin}}
+\index{AdminLogin@{AdminLogin}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin}}
+\doxysubsubsection{\texorpdfstring{AdminLogin()}{AdminLogin()}}
+{\footnotesize\ttfamily com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Admin\+Login.\+Admin\+Login (\begin{DoxyParamCaption}\item[{@Not\+Null String}]{nick,  }\item[{@Not\+Null String}]{password }\end{DoxyParamCaption})}
+
+Podstawowy konstruktor zawierający wszystkie pola, służący do tworzenia obiektu klasy. 
+\begin{DoxyParams}{Parameters}
+{\em nick} & login admina \\
+\hline
+{\em password} & hasło admina \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login_a320c144d0597c0d8939bc0e8e2678f8a}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login_a320c144d0597c0d8939bc0e8e2678f8a}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin}!getNick@{getNick}}
+\index{getNick@{getNick}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin}}
+\doxysubsubsection{\texorpdfstring{getNick()}{getNick()}}
+{\footnotesize\ttfamily String com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Admin\+Login.\+get\+Nick (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Getter zwracający login admina. \begin{DoxyReturn}{Returns}
+login admina 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login_a1c202342d7a0c1d064581b0c08c35b1a}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login_a1c202342d7a0c1d064581b0c08c35b1a}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin}!getPassword@{getPassword}}
+\index{getPassword@{getPassword}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin}}
+\doxysubsubsection{\texorpdfstring{getPassword()}{getPassword()}}
+{\footnotesize\ttfamily String com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Admin\+Login.\+get\+Password (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Getter zwracający hasło admina \begin{DoxyReturn}{Returns}
+hasło admina 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login_ae0afeea0cdc042471b108f1fce1129e6}\label{classcom_1_1_kaczor_1_1_kaluzinski_1_1_kalarus_1_1_serwer_1_1_database_1_1_admin_login_ae0afeea0cdc042471b108f1fce1129e6}} 
+\index{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin}!setPassword@{setPassword}}
+\index{setPassword@{setPassword}!com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin@{com.Kaczor.Kaluzinski.Kalarus.Serwer.Database.AdminLogin}}
+\doxysubsubsection{\texorpdfstring{setPassword()}{setPassword()}}
+{\footnotesize\ttfamily void com.\+Kaczor.\+Kaluzinski.\+Kalarus.\+Serwer.\+Database.\+Admin\+Login.\+set\+Password (\begin{DoxyParamCaption}\item[{@Not\+Null String}]{password }\end{DoxyParamCaption})}
+
+Setter ustawiający hasło admina 
+\begin{DoxyParams}{Parameters}
+{\em password} & hasło admina \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/micha/\+One\+Drive/\+Pulpit/\+Studia/\+Semestr IV/\+Programowanie\+\_\+\+JAVA/\+Projekt/\+Projekt\+\_\+\+Przemek\+\_\+\+Grzesiek\+\_\+\+Michal/\+Serwer/src/com/\+Kaczor/\+Kaluzinski/\+Kalarus/\+Serwer/\+Database/Admin\+Login.\+java\end{DoxyCompactItemize}
