@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class DataBaseManager {
 	
-	private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("ServerCfg");
+	private static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("ServerCfg");
 	private static final Logger logger = Logger.getLogger(DataBaseManager.class);
 	
 	/**
@@ -113,7 +113,7 @@ public class DataBaseManager {
 		 */
 		public static boolean isWorkerExist(@NotNull String nick)
 		{
-			EntityManager em = Persistence.createEntityManagerFactory("Server").createEntityManager();
+			EntityManager em = Persistence.createEntityManagerFactory("ServerCfg").createEntityManager();
 			TypedQuery<Worker> q = em.createQuery("SELECT pr FROM WORKER pr WHERE nick like :Nick", Worker.class);
 			q.setParameter("Nick", nick);
 			
