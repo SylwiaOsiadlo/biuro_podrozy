@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class DataBaseManager {
 	
-	private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("Server");
+	private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("ServerCfg");
 	private static final Logger logger = Logger.getLogger(DataBaseManager.class);
 	
 	/**
