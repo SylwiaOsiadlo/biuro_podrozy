@@ -12,11 +12,13 @@ import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
 
+import java.util.List;
+
 public class AlbumForm {
 
     private final ObservableList<Album> albums = FXCollections.observableArrayList();
 
-    public Scene getStage() {
+    public VBox getStage(ClientConnection con) {
         Stage primaryStage = new Stage();
         primaryStage.setTitle("Dodaj płytę");
 
@@ -57,6 +59,9 @@ public class AlbumForm {
         buttonBox.getChildren().add(editButton);
         buttonBox.getChildren().add(deleteButton);
 
+        List<Album> receivedList = (List<Album>) con.requestObject("plytyList");
+        albums.addAll(receivedList);
+
         addButton.setOnAction(e -> {
             String name = nameTextField.getText();
             String genre = genreTextField.getText();
@@ -83,19 +88,28 @@ public class AlbumForm {
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
         TableColumn<Album, Integer> wypozuczeniaColumn = new TableColumn<>("Wypożyczenia");
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("wypozyczenia"));
+        wypozuczeniaColumn.setCellValueFactory(new PropertyValueFactory<>("wypozyczenia"));
 
         tableView.getColumns().addAll(nameColumn, genreColumn, quantityColumn, wypozuczeniaColumn);
         tableView.setItems(albums);
+
+        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+
+                nameTextField.setText(newValue.getName());
+                genreTextField.setText(newValue.getGenre());
+                quantityTextField.setText(String.valueOf(newValue.getQuantity()));
+            }
+        });
 
         VBox vbox = new VBox();
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(10, 10, 10, 10));
 
         vbox.getChildren().addAll(grid, tableView);
-        Scene scene = new Scene(vbox, 600, 450);
-        primaryStage.setScene(scene);
+        //Scene scene = new Scene(vbox, 600, 450);
+        //primaryStage.setScene(scene);
         //primaryStage.show();
-        return scene;
+        return vbox;
     }
 }
