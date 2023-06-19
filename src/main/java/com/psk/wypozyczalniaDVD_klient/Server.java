@@ -41,7 +41,7 @@ public class Server {
     }
 
     static class RequestHandler implements Runnable {
-        private Socket clientSocket;
+        private final Socket clientSocket;
 
         public RequestHandler(Socket clientSocket) {
             this.clientSocket = clientSocket;
@@ -64,6 +64,10 @@ public class Server {
             //clientSocket.setSoTimeout(1000);
             BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             String request = reader.readLine();
+
+            if (request == null)
+                return;;
+
             System.out.println("Odebrano żądanie: " + request);
 
             if (request.startsWith("plytyList")) {
@@ -78,7 +82,7 @@ public class Server {
                 objectOutputStream.writeObject(list);
                 objectOutputStream.flush();
 
-                outputStream.close();
+                //outputStream.close();
             }
         }
     }
