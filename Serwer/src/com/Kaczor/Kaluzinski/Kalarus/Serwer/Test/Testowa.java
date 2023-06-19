@@ -1,1 +1,0 @@
-package com.Kaczor.Kaluzinski.Kalarus.Serwer.Test;
