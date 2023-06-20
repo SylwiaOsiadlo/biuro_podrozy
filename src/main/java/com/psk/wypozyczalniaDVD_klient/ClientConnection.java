@@ -43,6 +43,16 @@ public class ClientConnection {
     }
 
     public Object requestObject(String objectName) {
+        if (socket == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Błąd połączenia");
+            alert.setHeaderText("Nie połączono z serwerem.");
+            alert.setContentText("Uruchom aplikację ponownie.");
+            alert.show();
+
+            return null;
+        }
+
         try {
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
             dos.writeUTF(objectName);
@@ -69,6 +79,9 @@ public class ClientConnection {
     }
 
     public void sendCommand(String command) {
+        if (socket == null)
+            return;
+
         try {
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
             dos.writeUTF(command);
