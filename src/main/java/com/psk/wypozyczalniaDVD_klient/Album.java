@@ -32,4 +32,12 @@ public class Album implements Serializable {
         this.quantity = quantity;
         this.cena = cena;
     }
+
+    public Album(long id, String name, String genre, int quantity, float cena) {
+        this.id = id;
+        this.name = name;
+        this.genre = genre;
+        this.quantity = quantity;
+        this.cena = cena;
+    }
 }

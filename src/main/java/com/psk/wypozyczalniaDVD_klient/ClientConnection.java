@@ -44,10 +44,14 @@ public class ClientConnection {
 
     public Object requestObject(String objectName) {
         try {
-            outputStream.flush();
+            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+            dos.writeUTF(objectName);
+            dos.flush();
+
+            /*outputStream.flush();
             PrintWriter writer = new PrintWriter(outputStream, true);
             writer.flush();
-            writer.println(objectName);
+            writer.println(objectName);*/
 
             // Odczytywanie odpowiedzi serwera
             ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
@@ -66,10 +70,14 @@ public class ClientConnection {
 
     public void sendCommand(String command) {
         try {
-            outputStream.flush();
+            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+            dos.writeUTF(command);
+            dos.flush();
+
+            /*outputStream.flush();
             PrintWriter writer = new PrintWriter(outputStream, true);
             writer.flush();
-            writer.println(command);
+            writer.println(command);*/
         } catch (SocketTimeoutException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Błąd połączenia");
@@ -82,11 +90,16 @@ public class ClientConnection {
 
     public void sendObject(String objectName, Object obj) {
         try {
-            PrintWriter writer = new PrintWriter(outputStream, true);
+            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+            dos.writeUTF(objectName);
+            dos.flush();
+            /*PrintWriter writer = new PrintWriter(outputStream, false);
             writer.println(objectName);
+            writer.flush();*/
 
-            outputStream.flush();
-            objectOutputStream.writeObject(obj);
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            oos.writeObject(obj);
+            oos.flush();
             outputStream.flush();
         } catch (SocketTimeoutException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

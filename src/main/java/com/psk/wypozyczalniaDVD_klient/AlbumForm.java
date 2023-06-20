@@ -67,6 +67,7 @@ public class AlbumForm {
 
         List<Album> receivedList = (List<Album>) con.requestObject("plytyList");
         albums.addAll(receivedList);
+        TableView<Album> tableView = new TableView<>();
 
         addButton.setOnAction(e -> {
             String name = nameTextField.getText();
@@ -84,8 +85,32 @@ public class AlbumForm {
             quantityTextField.clear();
         });
 
+        editButton.setOnAction(e -> {
+            String name = nameTextField.getText();
+            String genre = genreTextField.getText();
+            int quantity = Integer.parseInt(quantityTextField.getText());
+            float cena = Float.parseFloat(cenaTextField.getText());
+
+            Album selectedAlbum = tableView.getSelectionModel().selectedItemProperty().get();
+            long selectedId = selectedAlbum.getId();
+            Album album = new Album(selectedId, name, genre, quantity, cena);
+
+            selectedAlbum.setName(name);
+            selectedAlbum.setGenre(genre);
+            selectedAlbum.setQuantity(quantity);
+            selectedAlbum.setCena(cena);
+            tableView.refresh();
+
+            con.sendObject("plytyEdit", album);
+
+            // Czyść pola tekstowe po dodaniu
+            nameTextField.clear();
+            genreTextField.clear();
+            quantityTextField.clear();
+            cenaTextField.clear();
+        });
+
         // Tworzenie tabeli
-        TableView<Album> tableView = new TableView<>();
         TableColumn<Album, String> nameColumn = new TableColumn<>("Nazwa płyty");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
@@ -95,18 +120,21 @@ public class AlbumForm {
         TableColumn<Album, Integer> quantityColumn = new TableColumn<>("Ilość sztuk");
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
+        TableColumn<Album, Integer> cenaColumn = new TableColumn<>("Cena");
+        cenaColumn.setCellValueFactory(new PropertyValueFactory<>("cena"));
+
         TableColumn<Album, Integer> wypozuczeniaColumn = new TableColumn<>("Wypożyczenia");
         wypozuczeniaColumn.setCellValueFactory(new PropertyValueFactory<>("wypozyczenia"));
 
-        tableView.getColumns().addAll(nameColumn, genreColumn, quantityColumn, wypozuczeniaColumn);
+        tableView.getColumns().addAll(nameColumn, genreColumn, quantityColumn, cenaColumn, wypozuczeniaColumn);
         tableView.setItems(albums);
 
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-
                 nameTextField.setText(newValue.getName());
                 genreTextField.setText(newValue.getGenre());
                 quantityTextField.setText(String.valueOf(newValue.getQuantity()));
+                cenaTextField.setText(String.valueOf(newValue.getCena()));
             }
         });
 

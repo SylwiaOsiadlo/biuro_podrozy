@@ -84,11 +84,8 @@ public class Server {
 
         private void handleRequest(Socket clientSocket) throws IOException, ClassNotFoundException {
             //clientSocket.setSoTimeout(1000);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            String request = reader.readLine();
-
-            if (request == null)
-                return;
+            DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
+            String request = dis.readUTF();
 
             System.out.println("Odebrano żądanie: " + request);
 
@@ -129,7 +126,6 @@ public class Server {
             }
             else if (request.contains("plytyAdd")) {
 
-
                 try {
                     ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
                     Album newAlbum = (Album) objectInputStream.readObject();
@@ -143,6 +139,32 @@ public class Server {
                     int rowsInserted = statement.executeUpdate();
                     if (rowsInserted > 0) {
                         System.out.println("Album został pomyślnie dodany do bazy danych.");
+                    }
+                    else {
+                        System.out.println(); // response
+                    }
+                }catch (SQLException | ClassNotFoundException e) {
+                    System.out.println(e);
+                }
+            }
+            else if (request.contains("plytyEdit")) {
+
+                try {
+                    ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+                    Album editAlbum = (Album) objectInputStream.readObject();
+                    String updateQuery = "UPDATE album SET name = ?, genre = ?, quantity = ?, cena = ? WHERE id = ?";
+                    PreparedStatement statement = dbCon.getConnection().prepareStatement(updateQuery);
+                    statement.setString(1, editAlbum.getName());
+                    statement.setString(2, editAlbum.getGenre());
+                    statement.setInt(3, editAlbum.getQuantity());
+                    statement.setFloat(4, editAlbum.getCena());
+                    statement.setLong(5, editAlbum.getId());
+
+                    int rowsUpdated = statement.executeUpdate();
+                    if (rowsUpdated > 0) {
+                        System.out.println("Album został pomyślnie zaktualizowany w bazie danych.");
+                    } else {
+                        System.out.println("Nie znaleziono albumu o podanym identyfikatorze.");
                     }
                 }catch (SQLException | ClassNotFoundException e) {
                     System.out.println(e);
