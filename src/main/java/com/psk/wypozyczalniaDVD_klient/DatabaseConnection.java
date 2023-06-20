@@ -6,7 +6,8 @@ public class DatabaseConnection {
 
     private static String url = "jdbc:mysql://localhost:3306/wypozyczalnia_dvd";
     private static String username = "root";
-    private static String password = "";
+    //private static String password = "";
+    private static String password = "toor";
 
     private Connection connection;
 
