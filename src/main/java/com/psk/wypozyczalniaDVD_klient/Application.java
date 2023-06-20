@@ -68,6 +68,7 @@ public class Application extends javafx.application.Application {
 
         primaryStage.setOnCloseRequest(t -> {
             try {
+                clientConnection.sendCommand("bye");
                 clientConnection.closeConnection();
             } catch (IOException e) {
                 throw new RuntimeException(e);

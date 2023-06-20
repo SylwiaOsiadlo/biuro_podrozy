@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import java.io.*;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 public class ClientConnection {
 
@@ -43,15 +44,39 @@ public class ClientConnection {
 
     public Object requestObject(String objectName) {
         try {
+            outputStream.flush();
             PrintWriter writer = new PrintWriter(outputStream, true);
+            writer.flush();
             writer.println(objectName);
 
             // Odczytywanie odpowiedzi serwera
             ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
             return objectInputStream.readObject();
+        } catch (SocketTimeoutException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Błąd połączenia");
+            alert.setHeaderText("Przekroczono limit czasu połączenia dla tego żądania.");
+            alert.show();
+            return null;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void sendCommand(String command) {
+        try {
+            outputStream.flush();
+            PrintWriter writer = new PrintWriter(outputStream, true);
+            writer.flush();
+            writer.println(command);
+        } catch (SocketTimeoutException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Błąd połączenia");
+            alert.setHeaderText("Przekroczono limit czasu połączenia dla tego żądania.");
+            alert.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -60,9 +85,15 @@ public class ClientConnection {
             PrintWriter writer = new PrintWriter(outputStream, true);
             writer.println(objectName);
 
+            outputStream.flush();
             objectOutputStream.writeObject(obj);
             outputStream.flush();
-        } catch (IOException e) {
+        } catch (SocketTimeoutException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Błąd połączenia");
+            alert.setHeaderText("Przekroczono limit czasu połączenia dla tego żądania.");
+            alert.show();
+        }  catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -76,7 +107,6 @@ public class ClientConnection {
 
         // Zamknięcie strumieni i gniazda
         outputStream.close();
-        objectOutputStream.close();
 
         reader.close();
         socket.close();

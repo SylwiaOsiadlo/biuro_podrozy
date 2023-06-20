@@ -24,9 +24,12 @@ public class Album implements Serializable {
     private int quantity;
     private int wypozyczenia;
 
-    public Album(String name, String genre, int quantity) {
+    private float cena;
+
+    public Album(String name, String genre, int quantity, float cena) {
         this.name = name;
         this.genre = genre;
         this.quantity = quantity;
+        this.cena = cena;
     }
 }

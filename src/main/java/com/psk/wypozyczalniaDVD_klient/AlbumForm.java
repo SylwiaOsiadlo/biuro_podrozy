@@ -32,6 +32,9 @@ public class AlbumForm {
         Label quantityLabel = new Label("Ilość sztuk:");
         TextField quantityTextField = new TextField();
 
+        Label cenaLabel = new Label("Cena:");
+        TextField cenaTextField = new TextField();
+
         Button addButton = new Button("Dodaj");
         Button editButton = new Button("Edytuj");
         Button deleteButton = new Button("Usuń");
@@ -51,9 +54,12 @@ public class AlbumForm {
         grid.add(quantityLabel, 0, 2);
         grid.add(quantityTextField, 1, 2);
 
+        grid.add(cenaLabel, 0, 3);
+        grid.add(cenaTextField, 1, 3);
+
         HBox buttonBox = new HBox();
 
-        grid.add(buttonBox, 0, 3, 2, 1);
+        grid.add(buttonBox, 0, 4, 2, 1);
 
         buttonBox.getChildren().add(addButton);
         buttonBox.getChildren().add(editButton);
@@ -66,9 +72,11 @@ public class AlbumForm {
             String name = nameTextField.getText();
             String genre = genreTextField.getText();
             int quantity = Integer.parseInt(quantityTextField.getText());
+            float cena = Float.parseFloat(cenaTextField.getText());
 
-            Album album = new Album(name, genre, quantity);
+            Album album = new Album(name, genre, quantity, cena);
             albums.add(album);
+            con.sendObject("plytyAdd", album);
 
             // Czyść pola tekstowe po dodaniu
             nameTextField.clear();

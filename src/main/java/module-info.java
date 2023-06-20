@@ -12,5 +12,7 @@ module com.psk.psk {
     opens com.psk.wypozyczalniaDVD_klient;
     requires lombok;
     requires java.persistence;
+    requires java.sql;
+
     exports com.psk.wypozyczalniaDVD_klient;
 }
