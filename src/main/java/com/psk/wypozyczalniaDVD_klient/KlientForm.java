@@ -18,9 +18,7 @@ public class KlientForm {
 
     private final ObservableList<Album> albums = FXCollections.observableArrayList();
 
-    public VBox getStage(ClientConnection con) {
-        Stage primaryStage = new Stage();
-        primaryStage.setTitle("Dodaj płytę");
+    public VBox getContent(ClientConnection con) {
 
         // Tworzenie etykiet i pól tekstowych
         Label nameLabel = new Label("Nazwa płyty:");
@@ -115,9 +113,7 @@ public class KlientForm {
         vbox.setPadding(new Insets(10, 10, 10, 10));
 
         vbox.getChildren().addAll(grid, tableView);
-        //Scene scene = new Scene(vbox, 600, 450);
-        //primaryStage.setScene(scene);
-        //primaryStage.show();
+
         return vbox;
     }
 }

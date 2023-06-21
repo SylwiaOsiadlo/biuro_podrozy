@@ -92,9 +92,6 @@ public class Server {
             if (request.contains("plytyList")) {
                 // Tworzenie przykładowej listy
                 List<Album> list = new ArrayList<>();
-                list.add(new Album("Skyfall", "film akcji", 12, 12.50f));
-                list.add(new Album("Shrek 2", "bajka", 42, 11.50f));
-                list.add(new Album("Shrek 3", "bajka", 33, 5.20f));
 
                 try {
                     Statement statement = dbCon.getConnection().createStatement();
@@ -163,6 +160,24 @@ public class Server {
                     int rowsUpdated = statement.executeUpdate();
                     if (rowsUpdated > 0) {
                         System.out.println("Album został pomyślnie zaktualizowany w bazie danych.");
+                    } else {
+                        System.out.println("Nie znaleziono albumu o podanym identyfikatorze.");
+                    }
+                }catch (SQLException | ClassNotFoundException e) {
+                    System.out.println(e);
+                }
+            }
+            else if (request.contains("plytyDel")) {
+                try {
+                    ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+                    Album editAlbum = (Album) objectInputStream.readObject();
+                    String updateQuery = "DELETE FROM album WHERE id = ?";
+                    PreparedStatement statement = dbCon.getConnection().prepareStatement(updateQuery);
+                    statement.setLong(1, editAlbum.getId());
+
+                    int rowsUpdated = statement.executeUpdate();
+                    if (rowsUpdated > 0) {
+                        System.out.println("Album został pomyślnie uzunięty z bazy danych.");
                     } else {
                         System.out.println("Nie znaleziono albumu o podanym identyfikatorze.");
                     }

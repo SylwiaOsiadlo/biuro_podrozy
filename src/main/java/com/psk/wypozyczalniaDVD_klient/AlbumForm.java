@@ -19,9 +19,6 @@ public class AlbumForm {
     private final ObservableList<Album> albums = FXCollections.observableArrayList();
 
     public VBox getStage(ClientConnection con) {
-        Stage primaryStage = new Stage();
-        primaryStage.setTitle("Dodaj płytę");
-
         // Tworzenie etykiet i pól tekstowych
         Label nameLabel = new Label("Nazwa płyty:");
         TextField nameTextField = new TextField();
@@ -110,6 +107,42 @@ public class AlbumForm {
             cenaTextField.clear();
         });
 
+        deleteButton.setOnAction(e -> {
+
+            Album selectedAlbum = tableView.getSelectionModel().selectedItemProperty().get();
+            long selectedId = selectedAlbum.getId();
+            Album album = new Album(selectedId, "", "", 0, 0);
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Zapytanie");
+            alert.setHeaderText("Czy na pewno chcesz usunąć tę płytę?");
+
+            ButtonType buttonTypeTak = new ButtonType("Tak");
+            ButtonType buttonTypeNie = new ButtonType("Nie");
+
+            alert.getButtonTypes().setAll(buttonTypeTak, buttonTypeNie);
+
+            alert.showAndWait().ifPresent(response -> {
+                if (response == buttonTypeTak) {
+                    System.out.println("Wybrano Tak");
+                    con.sendObject("plytyDel", album);
+
+                    albums.remove(selectedAlbum);
+                    tableView.refresh();
+                    alert.close();
+                } else if (response == buttonTypeNie) {
+                    System.out.println("Wybrano Nie");
+                    alert.close();
+                }
+            });
+
+            // Czyść pola tekstowe po dodaniu
+            nameTextField.clear();
+            genreTextField.clear();
+            quantityTextField.clear();
+            cenaTextField.clear();
+        });
+
         // Tworzenie tabeli
         TableColumn<Album, String> nameColumn = new TableColumn<>("Nazwa płyty");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -143,9 +176,6 @@ public class AlbumForm {
         vbox.setPadding(new Insets(10, 10, 10, 10));
 
         vbox.getChildren().addAll(grid, tableView);
-        //Scene scene = new Scene(vbox, 600, 450);
-        //primaryStage.setScene(scene);
-        //primaryStage.show();
         return vbox;
     }
 }
