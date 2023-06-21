@@ -48,6 +48,13 @@ public class Application extends javafx.application.Application {
             content.getChildren().add(albumForm.getContent(clientConnection));
         });
 
+        btnKlient.setOnAction(e -> {
+            KlientForm klientForm = new KlientForm();
+
+            content.getChildren().clear();
+            content.getChildren().add(klientForm.getContent(clientConnection));
+        });
+
         btnNav.getChildren().add(btnDVD);
         btnNav.getChildren().add(btnKlient);
         btnNav.getChildren().add(btnWypozycz);

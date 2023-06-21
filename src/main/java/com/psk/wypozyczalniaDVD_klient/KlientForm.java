@@ -2,37 +2,45 @@ package com.psk.wypozyczalniaDVD_klient;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class KlientForm {
 
-    private final ObservableList<Album> albums = FXCollections.observableArrayList();
+    private final ObservableList<Klient> klienci = FXCollections.observableArrayList();
 
     private long lastIdFromDb = 0;
 
     public VBox getContent(ClientConnection con) {
         // Tworzenie etykiet i pól tekstowych
-        Label nameLabel = new Label("Nazwa płyty:");
+        Label nameLabel = new Label("Imię:");
         TextField nameTextField = new TextField();
 
-        Label genreLabel = new Label("Gatunek:");
-        TextField genreTextField = new TextField();
+        Label surLabel = new Label("Nazwisko:");
+        TextField surnameTextField = new TextField();
 
-        Label quantityLabel = new Label("Ilość sztuk:");
-        TextField quantityTextField = new TextField();
+        Label telLabel = new Label("Nr tel.:");
+        TextField telTextField = new TextField();
 
-        Label cenaLabel = new Label("Cena:");
-        TextField cenaTextField = new TextField();
+        Label cityLabel = new Label("Miasto:");
+        TextField cityTextField = new TextField();
+
+        Label ulicaLabel = new Label("Ulica:");
+        TextField ulicaTextField = new TextField();
+
+        Label nrDomuLabel = new Label("Nr domu:");
+        TextField nrDomuTextField = new TextField();
+
+        Label kodLabel = new Label("Kod pocztowy:");
+        TextField kodTextField = new TextField();
 
         Button addButton = new Button("Dodaj");
         Button editButton = new Button("Edytuj");
@@ -47,83 +55,110 @@ public class KlientForm {
         grid.add(nameLabel, 0, 0);
         grid.add(nameTextField, 1, 0);
 
-        grid.add(genreLabel, 0, 1);
-        grid.add(genreTextField, 1, 1);
+        grid.add(surLabel, 0, 1);
+        grid.add(surnameTextField, 1, 1);
 
-        grid.add(quantityLabel, 0, 2);
-        grid.add(quantityTextField, 1, 2);
+        grid.add(telLabel, 0, 2);
+        grid.add(telTextField, 1, 2);
 
-        grid.add(cenaLabel, 0, 3);
-        grid.add(cenaTextField, 1, 3);
+        grid.add(cityLabel, 0, 3);
+        grid.add(cityTextField, 1, 3);
+
+        grid.add(ulicaLabel, 0, 4);
+        grid.add(ulicaTextField, 1, 4);
+
+        grid.add(nrDomuLabel, 0, 5);
+        grid.add(nrDomuTextField, 1, 6);
+
+        grid.add(kodLabel, 0, 7);
+        grid.add(kodTextField, 1, 7);
 
         HBox buttonBox = new HBox();
 
-        grid.add(buttonBox, 0, 4, 2, 1);
+        grid.add(buttonBox, 0, 8, 2, 1);
 
         buttonBox.getChildren().add(addButton);
         buttonBox.getChildren().add(editButton);
         buttonBox.getChildren().add(deleteButton);
 
-        List<Album> receivedList = (List<Album>) con.requestObject("plytyList");
-        albums.addAll(receivedList);
+        List<Klient> receivedList = (List<Klient>) con.requestObject("klienciList");
+        klienci.addAll(receivedList);
 
         int lastIndex = receivedList.size() - 1;
         if (lastIndex > -1)
             lastIdFromDb = receivedList.get(lastIndex).getId();
 
-        TableView<Album> tableView = new TableView<>();
+        TableView<Klient> tableView = new TableView<>();
 
         addButton.setOnAction(e -> {
             String name = nameTextField.getText();
-            String genre = genreTextField.getText();
-            int quantity = Integer.parseInt(quantityTextField.getText());
-            float cena = Float.parseFloat(cenaTextField.getText());
+            String surname = surnameTextField.getText();
+            String nrTel = telTextField.getText();
+            String city = cityTextField.getText();
+            String ulica = ulicaTextField.getText();
 
-            Album album = new Album(lastIdFromDb, name, genre, quantity, cena);
-            albums.add(album);
-            con.sendObject("plytyAdd", album);
+            String nrDomu = nrDomuTextField.getText();
+            String kod = kodTextField.getText();
+
+            Klient klient = new Klient(lastIdFromDb, name, surname, nrTel, city, ulica, nrDomu, kod);
+            klienci.add(klient);
+            con.sendObject("klienciAdd", klient);
 
             // Czyść pola tekstowe po dodaniu
             nameTextField.clear();
-            genreTextField.clear();
-            quantityTextField.clear();
-            cenaTextField.clear();
+            surnameTextField.clear();
+            telTextField.clear();
+            cityTextField.clear();
+            ulicaTextField.clear();
+            nrDomuTextField.clear();
+            kodTextField.clear();
         });
 
         editButton.setOnAction(e -> {
             String name = nameTextField.getText();
-            String genre = genreTextField.getText();
-            int quantity = Integer.parseInt(quantityTextField.getText());
-            float cena = Float.parseFloat(cenaTextField.getText());
+            String surname = surnameTextField.getText();
+            String nrTel = telTextField.getText();
+            String city = cityTextField.getText();
+            String ulica = ulicaTextField.getText();
 
-            Album selectedAlbum = tableView.getSelectionModel().selectedItemProperty().get();
-            long selectedId = selectedAlbum.getId();
-            Album album = new Album(selectedId, name, genre, quantity, cena);
+            String nrDomu = nrDomuTextField.getText();
+            String kod = kodTextField.getText();
 
-            selectedAlbum.setName(name);
-            selectedAlbum.setGenre(genre);
-            selectedAlbum.setQuantity(quantity);
-            selectedAlbum.setCena(cena);
+            Klient selectedKlient = tableView.getSelectionModel().selectedItemProperty().get();
+            long selectedId = selectedKlient.getId();
+            Klient klient = new Klient(selectedId, name, surname, nrTel, city, ulica, nrDomu, kod);
+            con.sendObject("klienciEdit", klient);
+
+            selectedKlient.setImie(name);
+            selectedKlient.setNazwisko(surname);
+            selectedKlient.setNr_tel(nrTel);
+            selectedKlient.setMiasto(city);
+
+            selectedKlient.setUlica(ulica);
+            selectedKlient.setNr_domu(nrDomu);
+            selectedKlient.setKod(kod);
+
             tableView.refresh();
-
-            con.sendObject("plytyEdit", album);
 
             // Czyść pola tekstowe po dodaniu
             nameTextField.clear();
-            genreTextField.clear();
-            quantityTextField.clear();
-            cenaTextField.clear();
+            surnameTextField.clear();
+            telTextField.clear();
+            cityTextField.clear();
+            ulicaTextField.clear();
+            nrDomuTextField.clear();
+            kodTextField.clear();
         });
 
         deleteButton.setOnAction(e -> {
-
-            Album selectedAlbum = tableView.getSelectionModel().selectedItemProperty().get();
-            long selectedId = selectedAlbum.getId();
-            Album album = new Album(selectedId, "", "", 0, 0);
+            Klient selectedKlient = tableView.getSelectionModel().selectedItemProperty().get();
+            long selectedId = selectedKlient.getId();
+            Klient klient = new Klient(selectedId, "", "", ""
+                    , "", "", "", "");
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Zapytanie");
-            alert.setHeaderText("Czy na pewno chcesz usunąć tę płytę?");
+            alert.setHeaderText("Czy na pewno chcesz usunąć klienta?");
 
             ButtonType buttonTypeTak = new ButtonType("Tak");
             ButtonType buttonTypeNie = new ButtonType("Nie");
@@ -133,9 +168,9 @@ public class KlientForm {
             alert.showAndWait().ifPresent(response -> {
                 if (response == buttonTypeTak) {
                     System.out.println("Wybrano Tak");
-                    con.sendObject("plytyDel", album);
+                    con.sendObject("klienciDel", klient);
 
-                    albums.remove(selectedAlbum);
+                    klienci.remove(selectedKlient);
                     tableView.refresh();
                     alert.close();
                 } else if (response == buttonTypeNie) {
@@ -146,36 +181,50 @@ public class KlientForm {
 
             // Czyść pola tekstowe po dodaniu
             nameTextField.clear();
-            genreTextField.clear();
-            quantityTextField.clear();
-            cenaTextField.clear();
+            surnameTextField.clear();
+            telTextField.clear();
+            cityTextField.clear();
+            ulicaTextField.clear();
+            nrDomuTextField.clear();
+            kodTextField.clear();
         });
 
         // Tworzenie tabeli
-        TableColumn<Album, String> nameColumn = new TableColumn<>("Nazwa płyty");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<Klient, String> nameColumn = new TableColumn<>("Imię");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("imie"));
 
-        TableColumn<Album, String> genreColumn = new TableColumn<>("Gatunek");
-        genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
+        TableColumn<Klient, String> surnameColumn = new TableColumn<>("Nazwisko");
+        surnameColumn.setCellValueFactory(new PropertyValueFactory<>("nazwisko"));
 
-        TableColumn<Album, Integer> quantityColumn = new TableColumn<>("Ilość sztuk");
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        TableColumn<Klient, Integer> telColumn = new TableColumn<>("Nr tel.");
+        telColumn.setCellValueFactory(new PropertyValueFactory<>("nr_tel"));
 
-        TableColumn<Album, Integer> cenaColumn = new TableColumn<>("Cena");
-        cenaColumn.setCellValueFactory(new PropertyValueFactory<>("cena"));
+        TableColumn<Klient, Integer> cityColumn = new TableColumn<>("Miasto");
+        cityColumn.setCellValueFactory(new PropertyValueFactory<>("miasto"));
 
-        TableColumn<Album, Integer> wypozuczeniaColumn = new TableColumn<>("Wypożyczenia");
-        wypozuczeniaColumn.setCellValueFactory(new PropertyValueFactory<>("wypozyczenia"));
+        TableColumn<Klient, Integer> ulicaColumn = new TableColumn<>("Ulica");
+        ulicaColumn.setCellValueFactory(new PropertyValueFactory<>("ulica"));
 
-        tableView.getColumns().addAll(nameColumn, genreColumn, quantityColumn, cenaColumn, wypozuczeniaColumn);
-        tableView.setItems(albums);
+        TableColumn<Klient, Integer> nrDomuColumn = new TableColumn<>("Nr domu");
+        nrDomuColumn.setCellValueFactory(new PropertyValueFactory<>("nr_domu"));
+
+        TableColumn<Klient, Integer> kodColumn = new TableColumn<>("Kod pocztowy");
+        kodColumn.setCellValueFactory(new PropertyValueFactory<>("kod"));
+
+        tableView.getColumns().addAll(nameColumn, surnameColumn, telColumn,
+                cityColumn, ulicaColumn, nrDomuColumn, kodColumn);
+        tableView.setItems(klienci);
 
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                nameTextField.setText(newValue.getName());
-                genreTextField.setText(newValue.getGenre());
-                quantityTextField.setText(String.valueOf(newValue.getQuantity()));
-                cenaTextField.setText(String.valueOf(newValue.getCena()));
+                nameTextField.setText(newValue.getImie());
+                surnameTextField.setText(newValue.getNazwisko());
+                telTextField.setText(String.valueOf(newValue.getNr_tel()));
+                cityTextField.setText(String.valueOf(newValue.getMiasto()));
+
+                ulicaTextField.setText(String.valueOf(newValue.getUlica()));
+                nrDomuTextField.setText(String.valueOf(newValue.getNr_domu()));
+                kodTextField.setText(String.valueOf(newValue.getKod()));
             }
         });
 

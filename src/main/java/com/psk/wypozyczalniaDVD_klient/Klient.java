@@ -24,10 +24,10 @@ public class Klient implements Serializable {
     private String nr_tel;
     private String miasto;
     private String ulica;
-    private int nr_domu;
+    private String nr_domu;
     private String kod; //kod pocztowy
 
-    public Klient(String imie, String nazwisko, String nr_tel, String miasto, String ulica, int nr_domu, String kod){
+    public Klient(String imie, String nazwisko, String nr_tel, String miasto, String ulica, String nr_domu, String kod){
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.nr_tel = nr_tel;

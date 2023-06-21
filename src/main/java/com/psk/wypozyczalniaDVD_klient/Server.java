@@ -3,7 +3,6 @@ package com.psk.wypozyczalniaDVD_klient;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -79,7 +78,6 @@ public class Server {
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-
         }
 
         private void handleRequest(Socket clientSocket) throws IOException, ClassNotFoundException {
@@ -106,12 +104,6 @@ public class Server {
 
                         Album album = new Album(id, name, genre, quantity, 0, cena);
                         list.add(album);
-                        System.out.println("ID: " + id);
-                        System.out.println("Name: " + name);
-                        System.out.println("Genre: " + genre);
-                        System.out.println("Quantity: " + quantity);
-                        System.out.println("Cena: " + cena);
-                        System.out.println("--------------------");
                     }
                 }catch (SQLException e) {
                     throw new RuntimeException(e);
@@ -180,6 +172,106 @@ public class Server {
                         System.out.println("Album został pomyślnie uzunięty z bazy danych.");
                     } else {
                         System.out.println("Nie znaleziono albumu o podanym identyfikatorze.");
+                    }
+                }catch (SQLException | ClassNotFoundException e) {
+                    System.out.println(e);
+                }
+            }
+            else if (request.contains("klienciList")) {
+                // Tworzenie przykładowej listy
+                List<Klient> list = new ArrayList<>();
+
+                try {
+                    Statement statement = dbCon.getConnection().createStatement();
+                    ResultSet resultSet = statement.executeQuery("SELECT * FROM osoba;");
+
+                    while (resultSet.next()) {
+                        long id = resultSet.getLong("id");
+                        String name = resultSet.getString("imie");
+                        String surname = resultSet.getString("nazwisko");
+                        String nrTel = resultSet.getString("nr_tel");
+                        String city = resultSet.getString("miasto");
+                        String ulica = resultSet.getString("ulica");
+                        String nrDomu = resultSet.getString("nr_domu");
+                        String kod = resultSet.getString("kod_pocztowy");
+
+                        Klient klient = new Klient(id, name, surname, nrTel, city, ulica, nrDomu, kod);
+                        list.add(klient);
+                    }
+                }catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+                objectOutputStream.writeObject(list);
+                objectOutputStream.flush();
+            }
+            else if (request.contains("klienciAdd")) {
+
+                try {
+                    ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+                    Klient newKlient = (Klient) objectInputStream.readObject();
+                    String insertQuery = "INSERT INTO osoba (imie, nazwisko, nr_tel, miasto, ulica, nr_domu, kod_pocztowy) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    PreparedStatement statement = dbCon.getConnection().prepareStatement(insertQuery);
+                    statement.setString(1, newKlient.getImie());
+                    statement.setString(2, newKlient.getNazwisko());
+                    statement.setString(3, newKlient.getNr_tel());
+                    statement.setString(4, newKlient.getMiasto());
+                    statement.setString(5, newKlient.getUlica());
+                    statement.setString(6, newKlient.getNr_domu());
+                    statement.setString(7, newKlient.getKod());
+
+                    int rowsInserted = statement.executeUpdate();
+                    if (rowsInserted > 0) {
+                        System.out.println("Klient został pomyślnie dodany do bazy danych.");
+                    }
+                    else {
+                        System.out.println(); // response
+                    }
+                }catch (SQLException | ClassNotFoundException e) {
+                    System.out.println(e);
+                }
+            }
+            else if (request.contains("klienciEdit")) {
+
+                try {
+                    ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+                    Klient editKlient = (Klient) objectInputStream.readObject();
+                    String updateQuery = "UPDATE osoba SET imie = ?, nazwisko = ?, nr_tel = ?, miasto = ?, ulica = ?, nr_domu = ?, kod_pocztowy = ? WHERE id = ?";
+                    PreparedStatement statement = dbCon.getConnection().prepareStatement(updateQuery);
+                    statement.setString(1, editKlient.getImie());
+                    statement.setString(2, editKlient.getNazwisko());
+                    statement.setString(3, editKlient.getNr_tel());
+                    statement.setString(4, editKlient.getMiasto());
+                    statement.setString(5, editKlient.getUlica());
+                    statement.setString(6, editKlient.getNr_domu());
+                    statement.setString(7, editKlient.getKod());
+
+                    statement.setLong(8, editKlient.getId());
+
+                    int rowsUpdated = statement.executeUpdate();
+                    if (rowsUpdated > 0) {
+                        System.out.println("Klient został pomyślnie zaktualizowany w bazie danych.");
+                    } else {
+                        System.out.println("Nie znaleziono klienta o podanym identyfikatorze.");
+                    }
+                }catch (SQLException | ClassNotFoundException e) {
+                    System.out.println(e);
+                }
+            }
+            else if (request.contains("klienciDel")) {
+                try {
+                    ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+                    Klient editKlient = (Klient) objectInputStream.readObject();
+                    String updateQuery = "DELETE FROM osoba WHERE id = ?";
+                    PreparedStatement statement = dbCon.getConnection().prepareStatement(updateQuery);
+                    statement.setLong(1, editKlient.getId());
+
+                    int rowsUpdated = statement.executeUpdate();
+                    if (rowsUpdated > 0) {
+                        System.out.println("Klient został pomyślnie uzunięty z bazy danych.");
+                    } else {
+                        System.out.println("Nie znaleziono klienta o podanym identyfikatorze.");
                     }
                 }catch (SQLException | ClassNotFoundException e) {
                     System.out.println(e);
