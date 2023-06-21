@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class WypozyczenieForm {
@@ -29,6 +30,8 @@ public class WypozyczenieForm {
         Label dataLabel = new Label("Data wypożyczenia:");
         TextField dataTextField = new TextField();
 
+        Label zwrotLabel = new Label("Data zwrotu planowana:");
+        TextField zwrotTextField = new TextField();
 
         Button addButton = new Button("Dodaj");
         Button editButton = new Button("Edytuj");
@@ -46,12 +49,15 @@ public class WypozyczenieForm {
         grid.add(clientLabel, 0, 1);
         grid.add(clientTextField, 1, 1);
 
-        grid.add(dvdLabel, 0, 2);
-        grid.add(dvdTextField, 1, 2);
+        grid.add(dataLabel, 0, 2);
+        grid.add(dataTextField, 1, 2);
+
+        grid.add(zwrotLabel, 0, 3);
+        grid.add(zwrotTextField, 1, 3);
 
         HBox buttonBox = new HBox();
 
-        grid.add(buttonBox, 0, 4, 2, 1);
+        grid.add(buttonBox, 0, 5, 2, 1);
 
         buttonBox.getChildren().add(addButton);
         buttonBox.getChildren().add(editButton);
@@ -69,101 +75,109 @@ public class WypozyczenieForm {
         addButton.setOnAction(e -> {
             int dvd = Integer.parseInt(dvdTextField.getText());
             int client = Integer.parseInt(clientTextField.getText());
-            int date = dataTextField.getText();
+            LocalDateTime dataWypozyczenia = LocalDateTime.parse(dataTextField.getText());
+            LocalDateTime dataZwrotuPlanowana = LocalDateTime.parse(zwrotTextField.getText());
 
-            Wypozyczenie wypozyczenie = new Wypozyczenie(lastIdFromDb, id_plyta, genre, quantity, cena);
-            wypozyczenie.add(wypozyczenia);
+            Wypozyczenie wypozyczenie = new Wypozyczenie(lastIdFromDb, dvd, client, dataWypozyczenia, dataZwrotuPlanowana);
+            wypozyczenia.add(wypozyczenie);
             con.sendObject("wypozyczenieAdd", wypozyczenie);
 
             // Czyść pola tekstowe po dodaniu
             dvdTextField.clear();
             clientTextField.clear();
             dataTextField.clear();
+            zwrotTextField.clear();
         });
 
         editButton.setOnAction(e -> {
             int dvd = Integer.parseInt(dvdTextField.getText());
             int client = Integer.parseInt(clientTextField.getText());
-            int date = dataTextField.getText();
+            LocalDateTime dataWypozyczenia = LocalDateTime.parse(dataTextField.getText());
+            LocalDateTime dataZwrotuPlanowana = LocalDateTime.parse(zwrotTextField.getText());
 
-            Album selectedAlbum = tableView.getSelectionModel().selectedItemProperty().get();
-            long selectedId = selectedAlbum.getId();
-            Album album = new Album(selectedId, name, genre, quantity, cena);
+            Wypozyczenie selectedWypozyczenie = tableView.getSelectionModel().getSelectedItem();
+            if (selectedWypozyczenie != null) {
+                long selectedId = selectedWypozyczenie.getId();
+                Wypozyczenie wypozyczenie = new Wypozyczenie(selectedId, dvd, client, dataWypozyczenia, dataZwrotuPlanowana);
 
-            selectedAlbum.setName(name);
-            selectedAlbum.setGenre(genre);
-            selectedAlbum.setQuantity(quantity);
-            selectedAlbum.setCena(cena);
-            tableView.refresh();
+                selectedWypozyczenie.setId_plyta(dvd);
+                selectedWypozyczenie.setId_klient(client);
+                selectedWypozyczenie.setData_w(dataWypozyczenia);
+                selectedWypozyczenie.setData_z(dataZwrotuPlanowana);
+                tableView.refresh();
 
-            con.sendObject("plytyEdit", album);
+                con.sendObject("wypozyczenieEdit", wypozyczenie);
+            }
 
-            // Czyść pola tekstowe po dodaniu
+            // Czyść pola tekstowe po edycji
             dvdTextField.clear();
             clientTextField.clear();
             dataTextField.clear();
+            zwrotTextField.clear();
         });
 
         deleteButton.setOnAction(e -> {
+            Wypozyczenie selectedWypozyczenie = tableView.getSelectionModel().getSelectedItem();
+            if (selectedWypozyczenie != null) {
+                long selectedId = selectedWypozyczenie.getId();
+                Wypozyczenie wypozyczenie = new Wypozyczenie(selectedId, 0, 0, null, null);
 
-            Album selectedAlbum = tableView.getSelectionModel().selectedItemProperty().get();
-            long selectedId = selectedAlbum.getId();
-            Album album = new Album(selectedId, "", "", 0, 0);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Zapytanie");
+                alert.setHeaderText("Czy na pewno chcesz usunąć to wypożyczenie?");
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Zapytanie");
-            alert.setHeaderText("Czy na pewno chcesz usunąć tę płytę?");
+                ButtonType buttonTypeTak = new ButtonType("Tak");
+                ButtonType buttonTypeNie = new ButtonType("Nie");
 
-            ButtonType buttonTypeTak = new ButtonType("Tak");
-            ButtonType buttonTypeNie = new ButtonType("Nie");
+                alert.getButtonTypes().setAll(buttonTypeTak, buttonTypeNie);
 
-            alert.getButtonTypes().setAll(buttonTypeTak, buttonTypeNie);
+                alert.showAndWait().ifPresent(response -> {
+                    if (response == buttonTypeTak) {
+                        System.out.println("Wybrano Tak");
+                        con.sendObject("wypozyczenieDel", wypozyczenie);
 
-            alert.showAndWait().ifPresent(response -> {
-                if (response == buttonTypeTak) {
-                    System.out.println("Wybrano Tak");
-                    con.sendObject("plytyDel", album);
+                        wypozyczenia.remove(selectedWypozyczenie);
+                        tableView.refresh();
+                        alert.close();
+                    } else if (response == buttonTypeNie) {
+                        System.out.println("Wybrano Nie");
+                        alert.close();
+                    }
+                });
+            }
 
-                    albums.remove(selectedAlbum);
-                    tableView.refresh();
-                    alert.close();
-                } else if (response == buttonTypeNie) {
-                    System.out.println("Wybrano Nie");
-                    alert.close();
-                }
-            });
-
-            // Czyść pola tekstowe po dodaniu
+            // Czyść pola tekstowe po usunięciu
             dvdTextField.clear();
             clientTextField.clear();
             dataTextField.clear();
+            zwrotTextField.clear();
         });
 
         // Tworzenie tabeli
-        TableColumn<Album, String> nameColumn = new TableColumn<>("Nazwa płyty");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        TableColumn<Wypozyczenie, Long> idColumn = new TableColumn<>("ID");
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-        TableColumn<Album, String> genreColumn = new TableColumn<>("Gatunek");
-        genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
+        TableColumn<Wypozyczenie, Integer> dvdColumn = new TableColumn<>("Numer płyty");
+        dvdColumn.setCellValueFactory(new PropertyValueFactory<>("id_plyta"));
 
-        TableColumn<Album, Integer> quantityColumn = new TableColumn<>("Ilość sztuk");
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        TableColumn<Wypozyczenie, Integer> clientColumn = new TableColumn<>("Numer klienta");
+        clientColumn.setCellValueFactory(new PropertyValueFactory<>("id_klient"));
 
-        TableColumn<Album, Integer> cenaColumn = new TableColumn<>("Cena");
-        cenaColumn.setCellValueFactory(new PropertyValueFactory<>("cena"));
+        TableColumn<Wypozyczenie, LocalDateTime> dataColumn = new TableColumn<>("Data wypożyczenia");
+        dataColumn.setCellValueFactory(new PropertyValueFactory<>("data_w"));
 
-        TableColumn<Album, Integer> wypozuczeniaColumn = new TableColumn<>("Wypożyczenia");
-        wypozuczeniaColumn.setCellValueFactory(new PropertyValueFactory<>("wypozyczenia"));
+        TableColumn<Wypozyczenie, LocalDateTime> zwrotColumn = new TableColumn<>("Data zwrotu planowana");
+        zwrotColumn.setCellValueFactory(new PropertyValueFactory<>("data_z"));
 
-        tableView.getColumns().addAll(nameColumn, genreColumn, quantityColumn, cenaColumn, wypozuczeniaColumn);
-        tableView.setItems(albums);
+        tableView.getColumns().addAll(idColumn, dvdColumn, clientColumn, dataColumn, zwrotColumn);
+        tableView.setItems(wypozyczenia);
 
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                nameTextField.setText(newValue.getName());
-                genreTextField.setText(newValue.getGenre());
-                quantityTextField.setText(String.valueOf(newValue.getQuantity()));
-                cenaTextField.setText(String.valueOf(newValue.getCena()));
+                dvdTextField.setText(String.valueOf(newValue.getId_plyta()));
+                clientTextField.setText(String.valueOf(newValue.getId_klient()));
+                dataTextField.setText(newValue.getData_w().toString());
+                zwrotTextField.setText(newValue.getData_z().toString());
             }
         });
 
