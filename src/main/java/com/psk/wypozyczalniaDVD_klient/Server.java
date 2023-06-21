@@ -362,54 +362,114 @@ public class Server {
                     System.out.println(e);
                 }
             }
-            else if (request.contains("klienciEdit")) {
-
-                try {
-                    ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
-                    Klient editKlient = (Klient) objectInputStream.readObject();
-                    String updateQuery = "UPDATE osoba SET imie = ?, nazwisko = ?, nr_tel = ?, miasto = ?, ulica = ?, nr_domu = ?, kod_pocztowy = ? WHERE id = ?";
-                    PreparedStatement statement = dbCon.getConnection().prepareStatement(updateQuery);
-                    statement.setString(1, editKlient.getImie());
-                    statement.setString(2, editKlient.getNazwisko());
-                    statement.setString(3, editKlient.getNr_tel());
-                    statement.setString(4, editKlient.getMiasto());
-                    statement.setString(5, editKlient.getUlica());
-                    statement.setString(6, editKlient.getNr_domu());
-                    statement.setString(7, editKlient.getKod());
-
-                    statement.setLong(8, editKlient.getId());
-
-                    int rowsUpdated = statement.executeUpdate();
-                    if (rowsUpdated > 0) {
-                        System.out.println("Klient został pomyślnie zaktualizowany w bazie danych.");
-                    } else {
-                        System.out.println("Nie znaleziono klienta o podanym identyfikatorze.");
-                    }
-                }catch (SQLException | ClassNotFoundException e) {
-                    System.out.println(e);
-                }
-            }
-            else if (request.contains("klienciDel")) {
-                try {
-                    ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
-                    Klient editKlient = (Klient) objectInputStream.readObject();
-                    String updateQuery = "DELETE FROM osoba WHERE id = ?";
-                    PreparedStatement statement = dbCon.getConnection().prepareStatement(updateQuery);
-                    statement.setLong(1, editKlient.getId());
-
-                    int rowsUpdated = statement.executeUpdate();
-                    if (rowsUpdated > 0) {
-                        System.out.println("Klient został pomyślnie uzunięty z bazy danych.");
-                    } else {
-                        System.out.println("Nie znaleziono klienta o podanym identyfikatorze.");
-                    }
-                }catch (SQLException | ClassNotFoundException e) {
-                    System.out.println(e);
-                }
-            }
             
             /// =========== Zwrot
-            
+
+            else if (request.contains("zwrotViewList")) {
+                // Tworzenie przykładowej listy
+                List<ZwrotView> list = new ArrayList<>();
+
+                try {
+                    Statement statement = dbCon.getConnection().createStatement();
+                    ResultSet resultSet = statement.executeQuery("SELECT * FROM zwrot;");
+
+                    while (resultSet.next()) {
+                        long id = resultSet.getLong("id");
+                        String name = resultSet.getString("imieKlienta");
+                        String surname = resultSet.getString("nazwiskoKlienta");
+                        String nrTel = resultSet.getString("nrTelKlienta");
+
+                        long idDVD = resultSet.getLong("idDVD");
+                        String nazwaDVD = resultSet.getString("nazwaDVD");
+                        String gatunekDVD = resultSet.getString("gatunekDVD");
+                        float cenaDVD = resultSet.getFloat("cena");
+                        int iloscDVD = resultSet.getInt("iloscSztuk");
+                        LocalDate dataW = resultSet.getDate("data_w").toLocalDate();
+                        LocalDate dataZ_planowana = resultSet.getDate("data_z_planowana").toLocalDate();
+                        LocalDate dataZ = resultSet.getDate("data_z").toLocalDate();
+
+                        ZwrotView zwrotView = new ZwrotView(id, name, surname, nrTel, idDVD, nazwaDVD, gatunekDVD, iloscDVD, cenaDVD, dataW, dataZ_planowana, dataZ);
+                        list.add(zwrotView);
+                    }
+                }catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+                objectOutputStream.writeObject(list);
+                objectOutputStream.flush();
+            }
+            else if (request.contains("zwrot")) {
+                try {
+                    ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+                    long selectedId = (long) objectInputStream.readObject();
+                    String query = "SELECT wypozyczenie.id, osoba.imie, osoba.nazwisko, osoba.nr_tel, album.id, album.name, album.genre, album.cena, album.quantity, wypozyczenie.data_w, wypozyczenie.data_z\n" +
+                            "FROM osoba\n" +
+                            "         JOIN wypozyczenie ON osoba.id = wypozyczenie.id_klient\n" +
+                            "         JOIN album ON wypozyczenie.id_plyta = album.id WHERE wypozyczenie.id = ?;";
+                    PreparedStatement statement = dbCon.getConnection().prepareStatement(query);
+
+                    statement.setLong(1, selectedId);
+                    ResultSet resultSet = statement.executeQuery();
+
+                    if (resultSet.next()) {
+                        long id = resultSet.getLong("wypozyczenie.id");
+                        String name = resultSet.getString("imie");
+                        String surname = resultSet.getString("nazwisko");
+                        String nrTel = resultSet.getString("nr_tel");
+
+                        long idDVD = resultSet.getLong("album.id");
+                        String nazwaDVD = resultSet.getString("name");
+                        String gatunekDVD = resultSet.getString("genre");
+                        float cenaDVD = resultSet.getFloat("cena");
+                        int iloscDVD = resultSet.getInt("quantity");
+                        LocalDate dataW = resultSet.getDate("data_w").toLocalDate();
+                        LocalDate dataZ_planowana = resultSet.getDate("data_z").toLocalDate();
+                        LocalDate dataZ = LocalDate.now();
+
+                        String insertQuery = "INSERT INTO zwrot (imieKlienta, nazwiskoKlienta, nrTelKlienta, idDVD, nazwaDVD, gatunekDVD, iloscSztuk, cena, data_w, data_z_planowana, data_z) " +
+                                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        PreparedStatement statementInsert = dbCon.getConnection().prepareStatement(insertQuery);
+                        statementInsert.setString(1, name);
+                        statementInsert.setString(2, surname);
+                        statementInsert.setString(3, nrTel);
+                        statementInsert.setLong(4, 1L);
+                        statementInsert.setString(5, nazwaDVD);
+                        statementInsert.setString(6, gatunekDVD);
+                        statementInsert.setInt(7, iloscDVD);
+                        statementInsert.setFloat(8, cenaDVD);
+                        statementInsert.setDate(9, Date.valueOf(dataW));
+                        statementInsert.setDate(10, Date.valueOf(dataZ_planowana));
+                        statementInsert.setDate(11, Date.valueOf(dataZ));
+
+                        int rowsInserted = statementInsert.executeUpdate();
+                        if (rowsInserted > 0) {
+                            System.out.println("Zwrot DVD został pomyślnie dodany do bazy danych.");
+
+                            String updateQuery = "DELETE FROM wypozyczenie WHERE id = ?";
+                            PreparedStatement statementDel = dbCon.getConnection().prepareStatement(updateQuery);
+                            statementDel.setLong(1, selectedId);
+
+                            int rowsUpdated = statementDel.executeUpdate();
+                            if (rowsUpdated > 0) {
+                                System.out.println("Wypozyczenie zostało pomyślnie uzunięty z bazy danych.");
+                            } else {
+                                System.out.println("Nie znaleziono wypożyczenia o podanym identyfikatorze.");
+                            }
+                        }
+                        else {
+                            System.out.println(); // response
+                        }
+
+                    }
+                    else {
+                        System.out.println("Nie znaleziono wypożyczenia o podanym identyfikatorze.");
+                    }
+
+                }catch (SQLException | ClassNotFoundException e) {
+                    System.out.println(e);
+                }
+            }
             
             
             else if (request.startsWith("bye")) {

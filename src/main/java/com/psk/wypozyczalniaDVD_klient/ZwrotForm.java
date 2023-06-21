@@ -10,167 +10,125 @@ import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ZwrotForm {
 
-    private final ObservableList<Zwrot> zwroty = FXCollections.observableArrayList();
+    private final ObservableList<WypozyczenieView> wypozyczenia = FXCollections.observableArrayList();
+    private final ObservableList<ZwrotView> zwroty = FXCollections.observableArrayList();
 
     private long lastIdFromDb = 0;
 
     public VBox getContent(ClientConnection con) {
         // Tworzenie etykiet i pól tekstowych
-        Label dvdLabel = new Label("Numer płyty:"); //id płyty
-        TextField dvdTextField = new TextField();
+        Label wypozyczeniaLabel = new Label("Lista wypożyczeń:");
+        TableView<WypozyczenieView> tableWypozyczeniaView = new TableView<>();
+        Label zwroconeLabel = new Label("Lista zwróconych:");
+        TableView<ZwrotView> tableZwrotyView = new TableView<>();
 
-        Label clientLabel = new Label("Numer klienta:"); // id klient
-        TextField clientTextField = new TextField();
-
-        Label activeLabel = new Label("Status:");
-        TextField activeTextField = new TextField();
-
-        Button addButton = new Button("Dodaj");
-        Button editButton = new Button("Edytuj");
-        Button deleteButton = new Button("Usuń");
-
-        // Tworzenie siatki i dodawanie komponentów
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(10, 10, 10, 10));
-        grid.setVgap(5);
-        grid.setHgap(5);
-
-        grid.add(dvdLabel, 0, 0);
-        grid.add(dvdTextField, 1, 0);
-
-        grid.add(clientLabel, 0, 1);
-        grid.add(clientTextField, 1, 1);
-
-        grid.add(activeLabel, 0, 2);
-        grid.add(activeTextField, 1, 2);
-
+        Button addButton = new Button("Zwróć");
         HBox buttonBox = new HBox();
 
-        grid.add(buttonBox, 0, 4, 2, 1);
-
         buttonBox.getChildren().add(addButton);
-        buttonBox.getChildren().add(editButton);
-        buttonBox.getChildren().add(deleteButton);
 
         //List<Zwrot> receivedList = (List<Zwrot>) con.requestObject("zwrotList");
-        List<Zwrot> receivedList = new ArrayList<>();
-        zwroty.addAll(receivedList);
+        List<ZwrotView> receivedZwrotyList = (List<ZwrotView>) con.requestObject("zwrotViewList");
+        //List<ZwrotView> receivedZwrotyList = new ArrayList<>();
+        //List<WypozyczenieView> receivedWypozyczeniaList = new ArrayList<>();
+        List<WypozyczenieView> receivedWypozyczeniaList = (List<WypozyczenieView>) con.requestObject("wypozyczenieViewList");
+        zwroty.addAll(receivedZwrotyList);
+        wypozyczenia.addAll(receivedWypozyczeniaList);
 
-        int lastIndex = receivedList.size() - 1;
+        int lastIndex = zwroty.size() - 1;
         if (lastIndex > -1)
-            lastIdFromDb = receivedList.get(lastIndex).getId();
-
-        TableView<Zwrot> tableView = new TableView<>();
+            lastIdFromDb = zwroty.get(lastIndex).getId();
 
         addButton.setOnAction(e -> {
-            int dvd = Integer.parseInt(dvdTextField.getText());
-            int client = Integer.parseInt(clientTextField.getText());
-            String active = activeTextField.getText();
+            WypozyczenieView selectedWypozyczenie = tableWypozyczeniaView.getSelectionModel().selectedItemProperty().get();
+            long selectedId = selectedWypozyczenie.getId();
 
-            Zwrot zwrot = new Zwrot(lastIdFromDb, dvd, client, active);
-            zwroty.add(zwrot);
-            con.sendObject("zwrotAdd", zwrot);
+            //zwroty.add(zwrot);
+            con.sendObject("zwrot", selectedId);
 
-            // Czyść pola tekstowe po dodaniu
-            dvdTextField.clear();
-            clientTextField.clear();
-            activeTextField.clear();
+            List<ZwrotView> receivedZwrotyListNew = (List<ZwrotView>) con.requestObject("zwrotViewList");
+            //List<ZwrotView> receivedZwrotyList = new ArrayList<>();
+            //List<WypozyczenieView> receivedWypozyczeniaList = new ArrayList<>();
+            List<WypozyczenieView> receivedWypozyczeniaListNew = (List<WypozyczenieView>) con.requestObject("wypozyczenieViewList");
+            zwroty.clear();
+            zwroty.addAll(receivedZwrotyListNew);
+            wypozyczenia.clear();
+            wypozyczenia.addAll(receivedWypozyczeniaListNew);
         });
 
-        editButton.setOnAction(e -> {
-            int dvd = Integer.parseInt(dvdTextField.getText());
-            int client = Integer.parseInt(clientTextField.getText());
-            String active = activeTextField.getText();
+        // Tworzenie tabeli wypożyczonych
+        TableColumn<WypozyczenieView, String> nameDvdColumn = new TableColumn<>("Nazwa płyty");
+        nameDvdColumn.setCellValueFactory(new PropertyValueFactory<>("nazwaDVD"));
 
-            Zwrot selectedZwrot = tableView.getSelectionModel().getSelectedItem();
-            if (selectedZwrot != null) {
-                long selectedId = selectedZwrot.getId();
-                Zwrot zwrot = new Zwrot(selectedId, dvd, client, active);
+        TableColumn<WypozyczenieView, String> gatunekDVDColumn = new TableColumn<>("Gatunek");
+        gatunekDVDColumn.setCellValueFactory(new PropertyValueFactory<>("gatunekDVD"));
 
-                selectedZwrot.setId_plyta(dvd);
-                selectedZwrot.setId_klient(client);
-                selectedZwrot.setActive(active);
-                tableView.refresh();
+        TableColumn<WypozyczenieView, Integer> iloscDVDColumn = new TableColumn<>("Ilość sztuk ogółem");
+        iloscDVDColumn.setCellValueFactory(new PropertyValueFactory<>("iloscSztuk"));
 
-                con.sendObject("zwrotEdit", zwrot);
-            }
+        TableColumn<WypozyczenieView, String> imieColumn = new TableColumn<>("Imię");
+        imieColumn.setCellValueFactory(new PropertyValueFactory<>("imieKlienta"));
 
-            // Czyść pola tekstowe po dodaniu
-            dvdTextField.clear();
-            clientTextField.clear();
-            activeTextField.clear();
-        });
+        TableColumn<WypozyczenieView, String> nazwiskoColumn = new TableColumn<>("Nazwisko");
+        nazwiskoColumn.setCellValueFactory(new PropertyValueFactory<>("nazwiskoKlienta"));
 
-        deleteButton.setOnAction(e -> {
-            Zwrot selectedZwrot = tableView.getSelectionModel().getSelectedItem();
-            if (selectedZwrot != null) {
-                long selectedId = selectedZwrot.getId();
-                Zwrot zwrot = new Zwrot(selectedId, 0, 0, "");
+        TableColumn<WypozyczenieView, String> telColumn = new TableColumn<>("Nr tel.");
+        telColumn.setCellValueFactory(new PropertyValueFactory<>("nrTelKlienta"));
 
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Zapytanie");
-                alert.setHeaderText("Czy na pewno chcesz usunąć ten zwrot?");
+        TableColumn<WypozyczenieView, LocalDateTime> dataColumn = new TableColumn<>("Data wypożyczenia");
+        dataColumn.setCellValueFactory(new PropertyValueFactory<>("data_w"));
 
-                ButtonType buttonTypeTak = new ButtonType("Tak");
-                ButtonType buttonTypeNie = new ButtonType("Nie");
+        TableColumn<WypozyczenieView, LocalDateTime> zwrotColumn = new TableColumn<>("Planowana data zwrotu");
+        zwrotColumn.setCellValueFactory(new PropertyValueFactory<>("data_z"));
 
-                alert.getButtonTypes().setAll(buttonTypeTak, buttonTypeNie);
+        tableWypozyczeniaView.getColumns().addAll(nameDvdColumn, gatunekDVDColumn, iloscDVDColumn, imieColumn, nazwiskoColumn, telColumn, dataColumn, zwrotColumn);
+        tableWypozyczeniaView.setItems(wypozyczenia);
 
-                alert.showAndWait().ifPresent(response -> {
-                    if (response == buttonTypeTak) {
-                        System.out.println("Wybrano Tak");
-                        con.sendObject("zwrotDel", zwrot);
+        // Tworzenie tabeli zwróconych
+        TableColumn<ZwrotView, String> nameDvdColumnZwroty = new TableColumn<>("Nazwa płyty");
+        nameDvdColumnZwroty.setCellValueFactory(new PropertyValueFactory<>("nazwaDVD"));
 
-                        zwroty.remove(selectedZwrot);
-                        tableView.refresh();
-                        alert.close();
-                    } else if (response == buttonTypeNie) {
-                        System.out.println("Wybrano Nie");
-                        alert.close();
-                    }
-                });
-            }
+        TableColumn<ZwrotView, String> gatunekDVDColumnZwroty = new TableColumn<>("Gatunek");
+        gatunekDVDColumnZwroty.setCellValueFactory(new PropertyValueFactory<>("gatunekDVD"));
 
-            // Czyść pola tekstowe po dodaniu
-            dvdTextField.clear();
-            clientTextField.clear();
-            activeTextField.clear();
-        });
+        TableColumn<ZwrotView, Float> cenaDVDColumnZwroty = new TableColumn<>("Cena [PLN]");
+        cenaDVDColumnZwroty.setCellValueFactory(new PropertyValueFactory<>("cena"));
 
-        // Tworzenie tabeli
-        TableColumn<Zwrot, Long> idColumn = new TableColumn<>("ID");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn<ZwrotView, Integer> iloscDVDColumnZwroty = new TableColumn<>("Ilość sztuk ogółem");
+        iloscDVDColumnZwroty.setCellValueFactory(new PropertyValueFactory<>("iloscSztuk"));
 
-        TableColumn<Zwrot, Integer> dvdColumn = new TableColumn<>("Numer płyty");
-        dvdColumn.setCellValueFactory(new PropertyValueFactory<>("id_plyta"));
+        TableColumn<ZwrotView, String> imieColumnZwroty = new TableColumn<>("Imię");
+        imieColumnZwroty.setCellValueFactory(new PropertyValueFactory<>("imieKlienta"));
 
-        TableColumn<Zwrot, Integer> clientColumn = new TableColumn<>("Numer klienta");
-        clientColumn.setCellValueFactory(new PropertyValueFactory<>("id_klient"));
+        TableColumn<ZwrotView, String> nazwiskoColumnZwroty = new TableColumn<>("Nazwisko");
+        nazwiskoColumnZwroty.setCellValueFactory(new PropertyValueFactory<>("nazwiskoKlienta"));
 
-        TableColumn<Zwrot, String> activeColumn = new TableColumn<>("Status");
-        activeColumn.setCellValueFactory(new PropertyValueFactory<>("active"));
+        TableColumn<ZwrotView, String> telColumnZwroty = new TableColumn<>("Nr tel.");
+        telColumnZwroty.setCellValueFactory(new PropertyValueFactory<>("nrTelKlienta"));
 
-        tableView.getColumns().addAll(idColumn, dvdColumn, clientColumn, activeColumn);
-        tableView.setItems(zwroty);
+        TableColumn<ZwrotView, LocalDateTime> dataColumnZwroty = new TableColumn<>("Data wypożyczenia");
+        dataColumnZwroty.setCellValueFactory(new PropertyValueFactory<>("data_w"));
 
-        tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                dvdTextField.setText(String.valueOf(newValue.getId_plyta()));
-                clientTextField.setText(String.valueOf(newValue.getId_klient()));
-                activeTextField.setText(newValue.getActive());
-            }
-        });
+        TableColumn<ZwrotView, LocalDateTime> zwrotPlanowanyColumnZwroty = new TableColumn<>("Planowana data zwrotu");
+        zwrotPlanowanyColumnZwroty.setCellValueFactory(new PropertyValueFactory<>("data_z_planowana"));
+
+        TableColumn<ZwrotView, LocalDateTime> zwrotColumnZwroty = new TableColumn<>("Data zwrotu");
+        zwrotColumnZwroty.setCellValueFactory(new PropertyValueFactory<>("data_z"));
+
+        tableZwrotyView.getColumns().addAll(nameDvdColumnZwroty, gatunekDVDColumnZwroty, cenaDVDColumnZwroty, iloscDVDColumnZwroty, imieColumnZwroty, nazwiskoColumnZwroty, telColumnZwroty, dataColumnZwroty, zwrotPlanowanyColumnZwroty, zwrotColumnZwroty);
+        tableZwrotyView.setItems(zwroty);
 
         VBox vbox = new VBox();
         vbox.setSpacing(10);
         vbox.setPadding(new Insets(10, 10, 10, 10));
 
-        vbox.getChildren().addAll(grid, tableView);
+        vbox.getChildren().addAll(wypozyczeniaLabel, tableWypozyczeniaView, buttonBox, zwroconeLabel, tableZwrotyView);
         return vbox;
     }
 }

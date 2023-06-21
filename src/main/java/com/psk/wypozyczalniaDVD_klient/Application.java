@@ -84,7 +84,7 @@ public class Application extends javafx.application.Application {
         layout.getChildren().add(separator);
         layout.getChildren().add(content);
         VBox.setVgrow(layout, Priority.ALWAYS);
-        Scene scene = new Scene(layout, 600, 450);
+        Scene scene = new Scene(layout, 800, 600);
 
         primaryStage.setScene(scene);
 

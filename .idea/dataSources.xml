@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mysql://localhost:3306/wypozyczalnia_dvd</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="wyporzyczalnia_dvd@localhost" uuid="cbdf8d14-14e9-4e94-b89a-d424818aeb3b">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/wyporzyczalnia_dvd</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
