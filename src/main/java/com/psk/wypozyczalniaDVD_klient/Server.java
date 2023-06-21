@@ -3,10 +3,9 @@ package com.psk.wypozyczalniaDVD_klient;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -277,6 +276,114 @@ public class Server {
                     System.out.println(e);
                 }
             }
+            /// =========== Wypozyczenie
+
+            else if (request.contains("wypozyczenieList")) {
+                // Tworzenie przykładowej listy
+                List<WypozyczenieView> list = new ArrayList<>();
+
+                try {
+                    Statement statement = dbCon.getConnection().createStatement();
+                    ResultSet resultSet = statement.executeQuery("SELECT wypozyczenie.id, osoba.imie, osoba.nazwisko, osoba.nr_tel, album.name, album.genre, wypozyczenie.data_w, wypozyczenie.data_z\n" +
+                            "FROM osoba\n" +
+                            "         JOIN wypozyczenie ON osoba.id = wypozyczenie.id_klient\n" +
+                            "         JOIN album ON wypozyczenie.id_plyta = album.id;");
+
+                    while (resultSet.next()) {
+                        long id = resultSet.getLong("wypozyczenie.id");
+                        String name = resultSet.getString("imie");
+                        String surname = resultSet.getString("nazwisko");
+                        String nrTel = resultSet.getString("nr_tel");
+                        
+                        String nazwaDVD = resultSet.getString("name");
+                        String gatunekDVD = resultSet.getString("genre");
+                        LocalDate dataW = resultSet.getDate("data_w").toLocalDate();
+                        LocalDate dataZ = resultSet.getDate("data_z").toLocalDate();
+
+                        WypozyczenieView wypozyczenieView = new WypozyczenieView(id, name, surname, nrTel, nazwaDVD, gatunekDVD, dataW, dataZ);
+                        list.add(wypozyczenieView);
+                    }
+                }catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+                objectOutputStream.writeObject(list);
+                objectOutputStream.flush();
+            }
+            else if (request.contains("wypozyczenieAdd")) {
+
+                try {
+                    ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+                    Wypozyczenie newWypozyczenie = (Wypozyczenie) objectInputStream.readObject();
+                    String insertQuery = "INSERT INTO wypozyczenie (id_klient, id_plyta, data_w, data_z) VALUES (?, ?, ?, ?)";
+                    PreparedStatement statement = dbCon.getConnection().prepareStatement(insertQuery);
+                    statement.setInt(1, newWypozyczenie.getId_klient());
+                    statement.setInt(2, newWypozyczenie.getId_plyta());
+                    statement.setDate(3, Date.valueOf(newWypozyczenie.getData_w()));
+                    statement.setDate(4, Date.valueOf(newWypozyczenie.getData_z()));
+
+                    int rowsInserted = statement.executeUpdate();
+                    if (rowsInserted > 0) {
+                        System.out.println("Wypozyczenie został pomyślnie dodany do bazy danych.");
+                    }
+                    else {
+                        System.out.println(); // response
+                    }
+                }catch (SQLException | ClassNotFoundException e) {
+                    System.out.println(e);
+                }
+            }
+            else if (request.contains("klienciEdit")) {
+
+                try {
+                    ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+                    Klient editKlient = (Klient) objectInputStream.readObject();
+                    String updateQuery = "UPDATE osoba SET imie = ?, nazwisko = ?, nr_tel = ?, miasto = ?, ulica = ?, nr_domu = ?, kod_pocztowy = ? WHERE id = ?";
+                    PreparedStatement statement = dbCon.getConnection().prepareStatement(updateQuery);
+                    statement.setString(1, editKlient.getImie());
+                    statement.setString(2, editKlient.getNazwisko());
+                    statement.setString(3, editKlient.getNr_tel());
+                    statement.setString(4, editKlient.getMiasto());
+                    statement.setString(5, editKlient.getUlica());
+                    statement.setString(6, editKlient.getNr_domu());
+                    statement.setString(7, editKlient.getKod());
+
+                    statement.setLong(8, editKlient.getId());
+
+                    int rowsUpdated = statement.executeUpdate();
+                    if (rowsUpdated > 0) {
+                        System.out.println("Klient został pomyślnie zaktualizowany w bazie danych.");
+                    } else {
+                        System.out.println("Nie znaleziono klienta o podanym identyfikatorze.");
+                    }
+                }catch (SQLException | ClassNotFoundException e) {
+                    System.out.println(e);
+                }
+            }
+            else if (request.contains("klienciDel")) {
+                try {
+                    ObjectInputStream objectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+                    Klient editKlient = (Klient) objectInputStream.readObject();
+                    String updateQuery = "DELETE FROM osoba WHERE id = ?";
+                    PreparedStatement statement = dbCon.getConnection().prepareStatement(updateQuery);
+                    statement.setLong(1, editKlient.getId());
+
+                    int rowsUpdated = statement.executeUpdate();
+                    if (rowsUpdated > 0) {
+                        System.out.println("Klient został pomyślnie uzunięty z bazy danych.");
+                    } else {
+                        System.out.println("Nie znaleziono klienta o podanym identyfikatorze.");
+                    }
+                }catch (SQLException | ClassNotFoundException e) {
+                    System.out.println(e);
+                }
+            }
+            
+            /// =========== Zwrot
+            
+            
+            
             else if (request.startsWith("bye")) {
                 if (!clientSocket.isClosed()) {
                     clientSocket.getOutputStream().close();

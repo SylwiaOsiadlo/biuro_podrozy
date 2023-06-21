@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ZwrotForm {
@@ -56,7 +57,8 @@ public class ZwrotForm {
         buttonBox.getChildren().add(editButton);
         buttonBox.getChildren().add(deleteButton);
 
-        List<Zwrot> receivedList = (List<Zwrot>) con.requestObject("zwrotList");
+        //List<Zwrot> receivedList = (List<Zwrot>) con.requestObject("zwrotList");
+        List<Zwrot> receivedList = new ArrayList<>();
         zwroty.addAll(receivedList);
 
         int lastIndex = receivedList.size() - 1;

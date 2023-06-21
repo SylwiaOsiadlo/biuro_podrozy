@@ -34,4 +34,9 @@ CREATE TABLE zwrot(
   FOREIGN KEY (id_klient) REFERENCES osoba(id)
 );
 
+SELECT osoba.imie, osoba.nazwisko, osoba.nr_tel, album.name, album.genre, wypozyczenie.data_w, wypozyczenie.data_z
+FROM osoba
+         JOIN wypozyczenie ON osoba.id = wypozyczenie.id_klient
+         JOIN album ON wypozyczenie.id_plyta = album.id;
+
 
