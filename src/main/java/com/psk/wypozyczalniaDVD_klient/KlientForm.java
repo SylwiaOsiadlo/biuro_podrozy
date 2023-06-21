@@ -50,7 +50,7 @@ public class KlientForm {
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setVgap(5);
-        grid.setHgap(5);
+        grid.setHgap(10);
 
         grid.add(nameLabel, 0, 0);
         grid.add(nameTextField, 1, 0);
@@ -61,21 +61,21 @@ public class KlientForm {
         grid.add(telLabel, 0, 2);
         grid.add(telTextField, 1, 2);
 
-        grid.add(cityLabel, 0, 3);
-        grid.add(cityTextField, 1, 3);
+        grid.add(cityLabel, 2, 0);
+        grid.add(cityTextField, 3, 0);
 
-        grid.add(ulicaLabel, 0, 4);
-        grid.add(ulicaTextField, 1, 4);
+        grid.add(ulicaLabel, 2, 1);
+        grid.add(ulicaTextField, 3, 1);
 
-        grid.add(nrDomuLabel, 0, 5);
-        grid.add(nrDomuTextField, 1, 6);
+        grid.add(nrDomuLabel, 2, 2);
+        grid.add(nrDomuTextField, 3, 2);
 
-        grid.add(kodLabel, 0, 7);
-        grid.add(kodTextField, 1, 7);
+        grid.add(kodLabel, 2, 3);
+        grid.add(kodTextField, 3, 3);
 
         HBox buttonBox = new HBox();
 
-        grid.add(buttonBox, 0, 8, 2, 1);
+        grid.add(buttonBox, 0, 7, 2, 1);
 
         buttonBox.getChildren().add(addButton);
         buttonBox.getChildren().add(editButton);
