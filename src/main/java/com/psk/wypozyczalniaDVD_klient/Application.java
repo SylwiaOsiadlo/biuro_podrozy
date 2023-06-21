@@ -16,7 +16,7 @@ public class Application extends javafx.application.Application {
 
     public Application() {
         clientConnection = new ClientConnection();
-        clientConnection.connect("localhost", 8000);
+        clientConnection.connect("localhost", 8080);
     }
 
     public static void main(String[] args) {
@@ -53,6 +53,13 @@ public class Application extends javafx.application.Application {
 
             content.getChildren().clear();
             content.getChildren().add(klientForm.getContent(clientConnection));
+        });
+
+        btnWypozycz.setOnAction(e -> {
+            WypozyczenieForm wypozyczenieForm = new WypozyczenieForm();
+
+            content.getChildren().clear();
+            content.getChildren().add(wypozyczenieForm.getContent(clientConnection));
         });
 
         btnNav.getChildren().add(btnDVD);

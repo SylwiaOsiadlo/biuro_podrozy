@@ -18,7 +18,7 @@ public class Server {
     private static boolean isRunning = true; // Flaga informująca o działaniu serwera
 
     public static void main(String[] args) {
-        int port = 8000; // Port, na którym serwer będzie nasłuchiwał
+        int port = 8080; // Port, na którym serwer będzie nasłuchiwał
 
         try {
             ServerSocket serverSocket = new ServerSocket(port);
