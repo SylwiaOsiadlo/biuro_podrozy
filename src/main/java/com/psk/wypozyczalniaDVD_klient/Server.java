@@ -280,11 +280,37 @@ public class Server {
 
             else if (request.contains("wypozyczenieList")) {
                 // Tworzenie przykładowej listy
+                List<Wypozyczenie> list = new ArrayList<>();
+
+                try {
+                    Statement statement = dbCon.getConnection().createStatement();
+                    ResultSet resultSet = statement.executeQuery("SELECT * FROM wypozyczenie;");
+
+                    while (resultSet.next()) {
+                        long id = resultSet.getLong("id");
+                        long id_plyta = resultSet.getLong("id_plyta");
+                        long id_klient = resultSet.getLong("id_klient");
+                        LocalDate dataW = resultSet.getDate("data_w").toLocalDate();
+                        LocalDate dataZ = resultSet.getDate("data_z").toLocalDate();
+
+                        Wypozyczenie wypozyczenie = new Wypozyczenie(id, id_plyta, id_klient, dataW, dataZ);
+                        list.add(wypozyczenie);
+                    }
+                }catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+                objectOutputStream.writeObject(list);
+                objectOutputStream.flush();
+            }
+            else if (request.contains("wypozyczenieViewList")) {
+                // Tworzenie przykładowej listy
                 List<WypozyczenieView> list = new ArrayList<>();
 
                 try {
                     Statement statement = dbCon.getConnection().createStatement();
-                    ResultSet resultSet = statement.executeQuery("SELECT wypozyczenie.id, osoba.imie, osoba.nazwisko, osoba.nr_tel, album.name, album.genre, wypozyczenie.data_w, wypozyczenie.data_z\n" +
+                    ResultSet resultSet = statement.executeQuery("SELECT wypozyczenie.id, osoba.imie, osoba.nazwisko, osoba.nr_tel, album.id, album.name, album.genre, album.quantity, wypozyczenie.data_w, wypozyczenie.data_z\n" +
                             "FROM osoba\n" +
                             "         JOIN wypozyczenie ON osoba.id = wypozyczenie.id_klient\n" +
                             "         JOIN album ON wypozyczenie.id_plyta = album.id;");
@@ -295,12 +321,14 @@ public class Server {
                         String surname = resultSet.getString("nazwisko");
                         String nrTel = resultSet.getString("nr_tel");
                         
+                        long idDVD = resultSet.getLong("album.id");
                         String nazwaDVD = resultSet.getString("name");
                         String gatunekDVD = resultSet.getString("genre");
+                        int iloscDVD = resultSet.getInt("quantity");
                         LocalDate dataW = resultSet.getDate("data_w").toLocalDate();
                         LocalDate dataZ = resultSet.getDate("data_z").toLocalDate();
 
-                        WypozyczenieView wypozyczenieView = new WypozyczenieView(id, name, surname, nrTel, nazwaDVD, gatunekDVD, dataW, dataZ);
+                        WypozyczenieView wypozyczenieView = new WypozyczenieView(id, name, surname, nrTel, idDVD, nazwaDVD, gatunekDVD, iloscDVD, dataW, dataZ);
                         list.add(wypozyczenieView);
                     }
                 }catch (SQLException e) {
@@ -318,8 +346,8 @@ public class Server {
                     Wypozyczenie newWypozyczenie = (Wypozyczenie) objectInputStream.readObject();
                     String insertQuery = "INSERT INTO wypozyczenie (id_klient, id_plyta, data_w, data_z) VALUES (?, ?, ?, ?)";
                     PreparedStatement statement = dbCon.getConnection().prepareStatement(insertQuery);
-                    statement.setInt(1, newWypozyczenie.getId_klient());
-                    statement.setInt(2, newWypozyczenie.getId_plyta());
+                    statement.setInt(1, (int) newWypozyczenie.getId_klient());
+                    statement.setInt(2, (int) newWypozyczenie.getId_plyta());
                     statement.setDate(3, Date.valueOf(newWypozyczenie.getData_w()));
                     statement.setDate(4, Date.valueOf(newWypozyczenie.getData_z()));
 

@@ -43,8 +43,6 @@ public class WypozyczenieForm {
         TextField zwrotTextField = new TextField();
 
         Button addButton = new Button("Wypożycz");
-        Button editButton = new Button("Edytuj");
-        Button deleteButton = new Button("Usuń");
 
         // Tworzenie siatki i dodawanie komponentów
         GridPane grid = new GridPane();
@@ -69,17 +67,16 @@ public class WypozyczenieForm {
         grid.add(buttonBox, 0, 5, 2, 1);
 
         buttonBox.getChildren().add(addButton);
-        buttonBox.getChildren().add(editButton);
-        buttonBox.getChildren().add(deleteButton);
 
-        List<WypozyczenieView> receivedList = (List<WypozyczenieView>) con.requestObject("wypozyczenieList");
+        List<WypozyczenieView> receivedViewList = (List<WypozyczenieView>) con.requestObject("wypozyczenieViewList");
+        List<Wypozyczenie> receivedList = (List<Wypozyczenie>) con.requestObject("wypozyczenieList");
         //List<Wypozyczenie> receivedList = new ArrayList<>();
 
-        wypozyczenia.addAll(receivedList);
+        wypozyczenia.addAll(receivedViewList);
 
-        int lastIndex = receivedList.size() - 1;
+        int lastIndex = receivedViewList.size() - 1;
         if (lastIndex > -1)
-            lastIdFromDb = receivedList.get(lastIndex).getId();
+            lastIdFromDb = receivedViewList.get(lastIndex).getId();
 
         TableView<WypozyczenieView> tableView = new TableView<>();
 
@@ -87,86 +84,56 @@ public class WypozyczenieForm {
             int dvd = Integer.parseInt(dvdTextField.getText());
             int client = Integer.parseInt(clientTextField.getText());
             LocalDate dataWypozyczenia = datePicker.getValue();
-            LocalDate dataZwrotuPlanowana = datePicker.getValue();
+            LocalDate dataZwrotuPlanowana = zwrotDatePicker.getValue();
 
-            Wypozyczenie wypozyczenie = new Wypozyczenie(lastIdFromDb, dvd, client, dataWypozyczenia, dataZwrotuPlanowana);
-            //wypozyczenia.add(wypozyczenie);
-            con.sendObject("wypozyczenieAdd", wypozyczenie);
+            int iloscWypozyczen = 0;
+            int iloscSztuk = 0;
+            boolean correctIlosc = true;
+            for (Wypozyczenie element : receivedList) {
+                if (element.getId_plyta() == dvd) {
+                    iloscWypozyczen++;
+                }
+            }
+            for (WypozyczenieView element : receivedViewList) {
+                if (element.getIdDVD() == dvd) {
+                    iloscSztuk = element.getIloscSztuk();
+                    break;
+                }
+            }
 
-            List<WypozyczenieView> receivedListAdd = (List<WypozyczenieView>) con.requestObject("wypozyczenieList");
+            boolean correctDate = true;
+            if (dataZwrotuPlanowana.isBefore(dataWypozyczenia)) {
+                correctDate = false;
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Operacja niedozwolona");
+                alert.setHeaderText("Planowana data oddania nie może być wcześniejsza niż data wypożyczenia.");
+                alert.show();
+            }
 
-            wypozyczenia.clear();
-            wypozyczenia.addAll(receivedListAdd);
+            if (iloscSztuk < iloscWypozyczen) {
+                correctIlosc = false;
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Operacja niedozwolona");
+                alert.setHeaderText("Wybrana płyta DVD nie jest dostępna do wypożyczenia.");
+                alert.show();
+            }
 
-            // Czyść pola tekstowe po dodaniu
-            dvdTextField.clear();
-            clientTextField.clear();
-            dataTextField.clear();
-            zwrotTextField.clear();
-        });
+            if (correctIlosc && correctDate) {
+                Wypozyczenie wypozyczenie = new Wypozyczenie(lastIdFromDb, dvd, client, dataWypozyczenia, dataZwrotuPlanowana);
+                //wypozyczenia.add(wypozyczenie);
+                con.sendObject("wypozyczenieAdd", wypozyczenie);
 
-        editButton.setOnAction(e -> {
-            int dvd = Integer.parseInt(dvdTextField.getText());
-            int client = Integer.parseInt(clientTextField.getText());
-            LocalDate dataWypozyczenia = LocalDate.parse(dataTextField.getText());
-            LocalDate dataZwrotuPlanowana = LocalDate.parse(zwrotTextField.getText());
+                List<WypozyczenieView> receivedListAdd = (List<WypozyczenieView>) con.requestObject("wypozyczenieViewList");
 
-            //Wypozyczenie selectedWypozyczenie = tableView.getSelectionModel().getSelectedItem();
-/*            if (selectedWypozyczenie != null) {
-                long selectedId = selectedWypozyczenie.getId();
-                Wypozyczenie wypozyczenie = new Wypozyczenie(selectedId, dvd, client, dataWypozyczenia, dataZwrotuPlanowana);
+                wypozyczenia.clear();
+                wypozyczenia.addAll(receivedListAdd);
 
-                selectedWypozyczenie.setId_plyta(dvd);
-                selectedWypozyczenie.setId_klient(client);
-                selectedWypozyczenie.setData_w(dataWypozyczenia);
-                selectedWypozyczenie.setData_z(dataZwrotuPlanowana);
-                tableView.refresh();
-
-                con.sendObject("wypozyczenieEdit", wypozyczenie);
-            }*/
-
-            // Czyść pola tekstowe po edycji
-            dvdTextField.clear();
-            clientTextField.clear();
-            dataTextField.clear();
-            zwrotTextField.clear();
-        });
-
-        deleteButton.setOnAction(e -> {
-            /*Wypozyczenie selectedWypozyczenie = tableView.getSelectionModel().getSelectedItem();
-            if (selectedWypozyczenie != null) {
-                long selectedId = selectedWypozyczenie.getId();
-                Wypozyczenie wypozyczenie = new Wypozyczenie(selectedId, 0, 0, null, null);
-
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Zapytanie");
-                alert.setHeaderText("Czy na pewno chcesz usunąć to wypożyczenie?");
-
-                ButtonType buttonTypeTak = new ButtonType("Tak");
-                ButtonType buttonTypeNie = new ButtonType("Nie");
-
-                alert.getButtonTypes().setAll(buttonTypeTak, buttonTypeNie);
-
-                alert.showAndWait().ifPresent(response -> {
-                    if (response == buttonTypeTak) {
-                        System.out.println("Wybrano Tak");
-                        con.sendObject("wypozyczenieDel", wypozyczenie);
-
-                        wypozyczenia.remove(selectedWypozyczenie);
-                        tableView.refresh();
-                        alert.close();
-                    } else if (response == buttonTypeNie) {
-                        System.out.println("Wybrano Nie");
-                        alert.close();
-                    }
-                });
-            }*/
-
-            // Czyść pola tekstowe po usunięciu
-            dvdTextField.clear();
-            clientTextField.clear();
-            dataTextField.clear();
-            zwrotTextField.clear();
+                // Czyść pola tekstowe po dodaniu
+                dvdTextField.clear();
+                clientTextField.clear();
+                dataTextField.clear();
+                zwrotTextField.clear();
+            }
         });
 
         // Tworzenie tabeli
@@ -175,6 +142,9 @@ public class WypozyczenieForm {
 
         TableColumn<WypozyczenieView, String> gatunekDVDColumn = new TableColumn<>("Gatunek");
         gatunekDVDColumn.setCellValueFactory(new PropertyValueFactory<>("gatunekDVD"));
+
+        TableColumn<WypozyczenieView, Integer> iloscDVDColumn = new TableColumn<>("Ilość sztuk ogółem");
+        iloscDVDColumn.setCellValueFactory(new PropertyValueFactory<>("iloscSztuk"));
 
         TableColumn<WypozyczenieView, String> imieColumn = new TableColumn<>("Imię");
         imieColumn.setCellValueFactory(new PropertyValueFactory<>("imieKlienta"));
@@ -191,7 +161,7 @@ public class WypozyczenieForm {
         TableColumn<WypozyczenieView, LocalDateTime> zwrotColumn = new TableColumn<>("Planowana data zwrotu");
         zwrotColumn.setCellValueFactory(new PropertyValueFactory<>("data_z"));
 
-        tableView.getColumns().addAll(nameDvdColumn, gatunekDVDColumn, imieColumn, nazwiskoColumn, telColumn, dataColumn, zwrotColumn);
+        tableView.getColumns().addAll(nameDvdColumn, gatunekDVDColumn, iloscDVDColumn, imieColumn, nazwiskoColumn, telColumn, dataColumn, zwrotColumn);
         tableView.setItems(wypozyczenia);
 
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

@@ -25,8 +25,10 @@ public class WypozyczenieView implements Serializable {
     private String nazwiskoKlienta;
     private String nrTelKlienta;
 
+    private long idDVD;
     private String nazwaDVD;
     private String gatunekDVD;
+    private int iloscSztuk;
 
     private LocalDate data_w; //data wypożyczenia
     private LocalDate data_z; //data zwrotu planowana

@@ -20,8 +20,8 @@ public class Wypozyczenie implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int id_plyta;
-    private int id_klient;
+    private long id_plyta;
+    private long id_klient;
     private LocalDate data_w; //data wypożyczenia
     private LocalDate data_z; //data zwrotu planowana
 
