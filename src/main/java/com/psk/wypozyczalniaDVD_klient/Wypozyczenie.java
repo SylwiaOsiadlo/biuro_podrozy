@@ -25,7 +25,7 @@ public class Wypozyczenie implements Serializable {
     private LocalDateTime data_z; //data zwrotu planowana
 
 
-    public Wypozyczenie(Long id_plyta, Long id_klient, LocalDateTime data_w, LocalDateTime data_z){
+    public Wypozyczenie(int id_plyta, int id_klient, LocalDateTime data_w, LocalDateTime data_z){
         this.id_plyta = id_plyta;
         this.id_klient = id_klient;
         this.data_w = data_w;

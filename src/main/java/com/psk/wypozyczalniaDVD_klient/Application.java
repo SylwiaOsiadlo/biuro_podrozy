@@ -60,8 +60,16 @@ public class Application extends javafx.application.Application {
 
             content.getChildren().clear();
             content.getChildren().add(wypozyczenieForm.getContent(clientConnection));
+
         });
 
+        btnZwroc.setOnAction(e -> {
+            ZwrotForm zwrotForm = new ZwrotForm();
+
+            content.getChildren().clear();
+            content.getChildren().add(zwrotForm.getContent(clientConnection));
+
+        });
         btnNav.getChildren().add(btnDVD);
         btnNav.getChildren().add(btnKlient);
         btnNav.getChildren().add(btnWypozycz);

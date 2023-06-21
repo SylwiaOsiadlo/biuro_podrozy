@@ -18,12 +18,12 @@ public class Zwrot implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long id_plyta;
-    private Long id_klient;
+    private int id_plyta;
+    private int id_klient;
     private String active; //pole logiczne przyjmujace wartosci tak/nie
 
 
-    public Zwrot(Long id_plyta, Long id_klient, String active){
+    public Zwrot(int id_plyta, int id_klient, String active){
         this.id_plyta = id_plyta;
         this.id_klient = id_klient;
         this.active = active;
