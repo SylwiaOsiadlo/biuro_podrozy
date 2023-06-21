@@ -47,19 +47,28 @@ public class ZwrotForm {
 
         addButton.setOnAction(e -> {
             WypozyczenieView selectedWypozyczenie = tableWypozyczeniaView.getSelectionModel().selectedItemProperty().get();
-            long selectedId = selectedWypozyczenie.getId();
 
-            //zwroty.add(zwrot);
-            con.sendObject("zwrot", selectedId);
+            if (selectedWypozyczenie != null) {
+                long selectedId = selectedWypozyczenie.getId();
 
-            List<ZwrotView> receivedZwrotyListNew = (List<ZwrotView>) con.requestObject("zwrotViewList");
-            //List<ZwrotView> receivedZwrotyList = new ArrayList<>();
-            //List<WypozyczenieView> receivedWypozyczeniaList = new ArrayList<>();
-            List<WypozyczenieView> receivedWypozyczeniaListNew = (List<WypozyczenieView>) con.requestObject("wypozyczenieViewList");
-            zwroty.clear();
-            zwroty.addAll(receivedZwrotyListNew);
-            wypozyczenia.clear();
-            wypozyczenia.addAll(receivedWypozyczeniaListNew);
+                //zwroty.add(zwrot);
+                con.sendObject("zwrot", selectedId);
+
+                List<ZwrotView> receivedZwrotyListNew = (List<ZwrotView>) con.requestObject("zwrotViewList");
+                //List<ZwrotView> receivedZwrotyList = new ArrayList<>();
+                //List<WypozyczenieView> receivedWypozyczeniaList = new ArrayList<>();
+                List<WypozyczenieView> receivedWypozyczeniaListNew = (List<WypozyczenieView>) con.requestObject("wypozyczenieViewList");
+                zwroty.clear();
+                zwroty.addAll(receivedZwrotyListNew);
+                wypozyczenia.clear();
+                wypozyczenia.addAll(receivedWypozyczeniaListNew);
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Operacja niedozwolona");
+                alert.setHeaderText("Wybierz wypożyczoną płytę do zwrotu z listy.");
+                alert.show();
+            }
         });
 
         // Tworzenie tabeli wypożyczonych
