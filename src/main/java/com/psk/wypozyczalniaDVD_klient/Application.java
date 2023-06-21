@@ -45,7 +45,7 @@ public class Application extends javafx.application.Application {
             AlbumForm albumForm = new AlbumForm();
 
             content.getChildren().clear();
-            content.getChildren().add(albumForm.getStage(clientConnection));
+            content.getChildren().add(albumForm.getContent(clientConnection));
         });
 
         btnNav.getChildren().add(btnDVD);

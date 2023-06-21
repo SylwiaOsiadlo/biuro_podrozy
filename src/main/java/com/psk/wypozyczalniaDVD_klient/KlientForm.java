@@ -18,8 +18,9 @@ public class KlientForm {
 
     private final ObservableList<Album> albums = FXCollections.observableArrayList();
 
-    public VBox getContent(ClientConnection con) {
+    private long lastIdFromDb = 0;
 
+    public VBox getContent(ClientConnection con) {
         // Tworzenie etykiet i pól tekstowych
         Label nameLabel = new Label("Nazwa płyty:");
         TextField nameTextField = new TextField();
@@ -66,13 +67,19 @@ public class KlientForm {
         List<Album> receivedList = (List<Album>) con.requestObject("plytyList");
         albums.addAll(receivedList);
 
+        int lastIndex = receivedList.size() - 1;
+        if (lastIndex > -1)
+            lastIdFromDb = receivedList.get(lastIndex).getId();
+
+        TableView<Album> tableView = new TableView<>();
+
         addButton.setOnAction(e -> {
             String name = nameTextField.getText();
             String genre = genreTextField.getText();
             int quantity = Integer.parseInt(quantityTextField.getText());
             float cena = Float.parseFloat(cenaTextField.getText());
 
-            Album album = new Album(name, genre, quantity, cena);
+            Album album = new Album(lastIdFromDb, name, genre, quantity, cena);
             albums.add(album);
             con.sendObject("plytyAdd", album);
 
@@ -80,10 +87,71 @@ public class KlientForm {
             nameTextField.clear();
             genreTextField.clear();
             quantityTextField.clear();
+            cenaTextField.clear();
+        });
+
+        editButton.setOnAction(e -> {
+            String name = nameTextField.getText();
+            String genre = genreTextField.getText();
+            int quantity = Integer.parseInt(quantityTextField.getText());
+            float cena = Float.parseFloat(cenaTextField.getText());
+
+            Album selectedAlbum = tableView.getSelectionModel().selectedItemProperty().get();
+            long selectedId = selectedAlbum.getId();
+            Album album = new Album(selectedId, name, genre, quantity, cena);
+
+            selectedAlbum.setName(name);
+            selectedAlbum.setGenre(genre);
+            selectedAlbum.setQuantity(quantity);
+            selectedAlbum.setCena(cena);
+            tableView.refresh();
+
+            con.sendObject("plytyEdit", album);
+
+            // Czyść pola tekstowe po dodaniu
+            nameTextField.clear();
+            genreTextField.clear();
+            quantityTextField.clear();
+            cenaTextField.clear();
+        });
+
+        deleteButton.setOnAction(e -> {
+
+            Album selectedAlbum = tableView.getSelectionModel().selectedItemProperty().get();
+            long selectedId = selectedAlbum.getId();
+            Album album = new Album(selectedId, "", "", 0, 0);
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Zapytanie");
+            alert.setHeaderText("Czy na pewno chcesz usunąć tę płytę?");
+
+            ButtonType buttonTypeTak = new ButtonType("Tak");
+            ButtonType buttonTypeNie = new ButtonType("Nie");
+
+            alert.getButtonTypes().setAll(buttonTypeTak, buttonTypeNie);
+
+            alert.showAndWait().ifPresent(response -> {
+                if (response == buttonTypeTak) {
+                    System.out.println("Wybrano Tak");
+                    con.sendObject("plytyDel", album);
+
+                    albums.remove(selectedAlbum);
+                    tableView.refresh();
+                    alert.close();
+                } else if (response == buttonTypeNie) {
+                    System.out.println("Wybrano Nie");
+                    alert.close();
+                }
+            });
+
+            // Czyść pola tekstowe po dodaniu
+            nameTextField.clear();
+            genreTextField.clear();
+            quantityTextField.clear();
+            cenaTextField.clear();
         });
 
         // Tworzenie tabeli
-        TableView<Album> tableView = new TableView<>();
         TableColumn<Album, String> nameColumn = new TableColumn<>("Nazwa płyty");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
@@ -93,18 +161,21 @@ public class KlientForm {
         TableColumn<Album, Integer> quantityColumn = new TableColumn<>("Ilość sztuk");
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
+        TableColumn<Album, Integer> cenaColumn = new TableColumn<>("Cena");
+        cenaColumn.setCellValueFactory(new PropertyValueFactory<>("cena"));
+
         TableColumn<Album, Integer> wypozuczeniaColumn = new TableColumn<>("Wypożyczenia");
         wypozuczeniaColumn.setCellValueFactory(new PropertyValueFactory<>("wypozyczenia"));
 
-        tableView.getColumns().addAll(nameColumn, genreColumn, quantityColumn, wypozuczeniaColumn);
+        tableView.getColumns().addAll(nameColumn, genreColumn, quantityColumn, cenaColumn, wypozuczeniaColumn);
         tableView.setItems(albums);
 
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-
                 nameTextField.setText(newValue.getName());
                 genreTextField.setText(newValue.getGenre());
                 quantityTextField.setText(String.valueOf(newValue.getQuantity()));
+                cenaTextField.setText(String.valueOf(newValue.getCena()));
             }
         });
 
@@ -113,7 +184,6 @@ public class KlientForm {
         vbox.setPadding(new Insets(10, 10, 10, 10));
 
         vbox.getChildren().addAll(grid, tableView);
-
         return vbox;
     }
 }

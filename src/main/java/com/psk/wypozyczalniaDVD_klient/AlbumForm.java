@@ -2,12 +2,10 @@ package com.psk.wypozyczalniaDVD_klient;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import javafx.geometry.Insets;
 import javafx.scene.layout.GridPane;
@@ -18,7 +16,9 @@ public class AlbumForm {
 
     private final ObservableList<Album> albums = FXCollections.observableArrayList();
 
-    public VBox getStage(ClientConnection con) {
+    private long lastIdFromDb = 0;
+
+    public VBox getContent(ClientConnection con) {
         // Tworzenie etykiet i pól tekstowych
         Label nameLabel = new Label("Nazwa płyty:");
         TextField nameTextField = new TextField();
@@ -64,6 +64,11 @@ public class AlbumForm {
 
         List<Album> receivedList = (List<Album>) con.requestObject("plytyList");
         albums.addAll(receivedList);
+
+        int lastIndex = receivedList.size() - 1;
+        if (lastIndex > -1)
+            lastIdFromDb = receivedList.get(lastIndex).getId();
+
         TableView<Album> tableView = new TableView<>();
 
         addButton.setOnAction(e -> {
@@ -72,7 +77,7 @@ public class AlbumForm {
             int quantity = Integer.parseInt(quantityTextField.getText());
             float cena = Float.parseFloat(cenaTextField.getText());
 
-            Album album = new Album(name, genre, quantity, cena);
+            Album album = new Album(lastIdFromDb, name, genre, quantity, cena);
             albums.add(album);
             con.sendObject("plytyAdd", album);
 
@@ -80,6 +85,7 @@ public class AlbumForm {
             nameTextField.clear();
             genreTextField.clear();
             quantityTextField.clear();
+            cenaTextField.clear();
         });
 
         editButton.setOnAction(e -> {
