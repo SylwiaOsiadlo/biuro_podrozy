@@ -105,9 +105,6 @@ public class AlbumForm {
                 validForm = false;
             }
 
-            int quantity = Integer.parseInt(quantityTextField.getText());
-            float cena = Float.parseFloat(cenaTextField.getText());
-
             if (!validForm) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Formularz zawiera błędy");
@@ -115,6 +112,8 @@ public class AlbumForm {
                 alert.setContentText(validationInfo);
                 alert.show();
             } else {
+                int quantity = Integer.parseInt(quantityTextField.getText());
+                float cena = Float.parseFloat(cenaTextField.getText());
                 Album album = new Album(lastIdFromDb, name, genre, quantity, cena);
                 albums.add(album);
                 con.sendObject("plytyAdd", album);
@@ -158,9 +157,6 @@ public class AlbumForm {
                 validForm = false;
             }
 
-            int quantity = Integer.parseInt(quantityTextField.getText());
-            float cena = Float.parseFloat(cenaTextField.getText());
-
             if (!validForm) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Formularz zawiera błędy");
@@ -168,6 +164,9 @@ public class AlbumForm {
                 alert.setContentText(validationInfo);
                 alert.show();
             } else {
+                int quantity = Integer.parseInt(quantityTextField.getText());
+                float cena = Float.parseFloat(cenaTextField.getText());
+
                 Album selectedAlbum = tableView.getSelectionModel().selectedItemProperty().get();
                 long selectedId = selectedAlbum.getId();
                 Album album = new Album(selectedId, name, genre, quantity, cena);
