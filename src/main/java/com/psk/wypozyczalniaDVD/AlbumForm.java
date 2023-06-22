@@ -240,7 +240,7 @@ public class AlbumForm {
         TableColumn<Album, Integer> wypozuczeniaColumn = new TableColumn<>("Wypożyczenia");
         wypozuczeniaColumn.setCellValueFactory(new PropertyValueFactory<>("wypozyczenia"));
 
-        tableView.getColumns().addAll(nameColumn, genreColumn, quantityColumn, cenaColumn, wypozuczeniaColumn);
+        tableView.getColumns().addAll(nameColumn, genreColumn, quantityColumn, cenaColumn);
         tableView.setItems(albums);
 
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

@@ -1,5 +1,7 @@
 package com.psk.wypozyczalniaDVD;
 
+import java.time.LocalDate;
+
 public class Validator {
 
     public static boolean validateName(String name, StringBuilder outInfo) {
@@ -167,6 +169,22 @@ public class Validator {
             }
         } catch (NumberFormatException e) {
             System.out.println("Pole 'Ilość sztuk' zawiera nieprawidłową wartość liczbową!");
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean validateDate(String date, StringBuilder outInfo) {
+        if (date.isEmpty()) {
+            outInfo.append("Pole 'Data' jest wymagane!");
+            return false;
+        }
+
+        try {
+            LocalDate.parse(date);
+        } catch (Exception e) {
+            outInfo.append("Nieprawidłowy format pola 'Data'!");
             return false;
         }
 
