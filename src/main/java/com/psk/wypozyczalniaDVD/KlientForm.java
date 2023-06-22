@@ -16,6 +16,9 @@ public class KlientForm {
 
     private final ObservableList<Klient> klienci = FXCollections.observableArrayList();
 
+    private String validationInfo = "";
+    private boolean validForm = true;
+
     private long lastIdFromDb = 0;
 
     public VBox getContent(ClientConnection con) {
@@ -90,6 +93,8 @@ public class KlientForm {
         TableView<Klient> tableView = new TableView<>();
 
         addButton.setOnAction(e -> {
+            validForm = true;
+            validationInfo = "";
             String name = nameTextField.getText();
             String surname = surnameTextField.getText();
             String nrTel = telTextField.getText();
@@ -99,21 +104,74 @@ public class KlientForm {
             String nrDomu = nrDomuTextField.getText();
             String kod = kodTextField.getText();
 
-            Klient klient = new Klient(lastIdFromDb, name, surname, nrTel, city, ulica, nrDomu, kod);
-            klienci.add(klient);
-            con.sendObject("klienciAdd", klient);
+            StringBuilder nameInfo = new StringBuilder();
+            if (!Validator.validateName(name, nameInfo)) {
+                validationInfo += nameInfo + "\n";
+                validForm = false;
+            }
 
-            // Czyść pola tekstowe po dodaniu
-            nameTextField.clear();
-            surnameTextField.clear();
-            telTextField.clear();
-            cityTextField.clear();
-            ulicaTextField.clear();
-            nrDomuTextField.clear();
-            kodTextField.clear();
+            StringBuilder surnameInfo = new StringBuilder();
+            if (!Validator.validateSurname(surname, surnameInfo)) {
+                validationInfo += surnameInfo + "\n";
+                validForm = false;
+            }
+
+            StringBuilder nrTelInfo = new StringBuilder();
+            if (!Validator.validatePhoneNumber(nrTel, nrTelInfo)) {
+                validationInfo += nrTelInfo + "\n";
+                validForm = false;
+            }
+
+            StringBuilder cityInfo = new StringBuilder();
+            if (!Validator.validateCity(city, cityInfo)) {
+                validationInfo += cityInfo + "\n";
+                validForm = false;
+            }
+
+            StringBuilder ulicaInfo = new StringBuilder();
+            if (!Validator.validateStreet(ulica, ulicaInfo)) {
+                validationInfo += ulicaInfo + "\n";
+                validForm = false;
+            }
+
+            StringBuilder nrDomuInfo = new StringBuilder();
+            if (!Validator.validateHouseNumber(nrDomu, nrDomuInfo)) {
+                validationInfo += ulicaInfo + "\n";
+                validForm = false;
+            }
+
+            StringBuilder postCodeInfo = new StringBuilder();
+            if (!Validator.validatePostalCode(kod, postCodeInfo)) {
+                validationInfo += postCodeInfo + "\n";
+                validForm = false;
+            }
+
+            if (!validForm) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Formularz zawiera błędy");
+                alert.setHeaderText("Popraw dane w formularzu:");
+                alert.setContentText(validationInfo);
+                alert.show();
+            } else {
+                Klient klient = new Klient(lastIdFromDb, name, surname, nrTel, city, ulica, nrDomu, kod);
+                klienci.add(klient);
+                con.sendObject("klienciAdd", klient);
+
+                // Czyść pola tekstowe po dodaniu
+                nameTextField.clear();
+                surnameTextField.clear();
+                telTextField.clear();
+                cityTextField.clear();
+                ulicaTextField.clear();
+                nrDomuTextField.clear();
+                kodTextField.clear();
+            }
         });
 
         editButton.setOnAction(e -> {
+            validForm = true;
+            validationInfo = "";
+
             String name = nameTextField.getText();
             String surname = surnameTextField.getText();
             String nrTel = telTextField.getText();
@@ -123,30 +181,80 @@ public class KlientForm {
             String nrDomu = nrDomuTextField.getText();
             String kod = kodTextField.getText();
 
-            Klient selectedKlient = tableView.getSelectionModel().selectedItemProperty().get();
-            long selectedId = selectedKlient.getId();
-            Klient klient = new Klient(selectedId, name, surname, nrTel, city, ulica, nrDomu, kod);
-            con.sendObject("klienciEdit", klient);
+            StringBuilder nameInfo = new StringBuilder();
+            if (!Validator.validateName(name, nameInfo)) {
+                validationInfo += nameInfo + "\n";
+                validForm = false;
+            }
 
-            selectedKlient.setImie(name);
-            selectedKlient.setNazwisko(surname);
-            selectedKlient.setNr_tel(nrTel);
-            selectedKlient.setMiasto(city);
+            StringBuilder surnameInfo = new StringBuilder();
+            if (!Validator.validateSurname(surname, surnameInfo)) {
+                validationInfo += surnameInfo + "\n";
+                validForm = false;
+            }
 
-            selectedKlient.setUlica(ulica);
-            selectedKlient.setNr_domu(nrDomu);
-            selectedKlient.setKod(kod);
+            StringBuilder nrTelInfo = new StringBuilder();
+            if (!Validator.validatePhoneNumber(nrTel, nrTelInfo)) {
+                validationInfo += nrTelInfo + "\n";
+                validForm = false;
+            }
 
-            tableView.refresh();
+            StringBuilder cityInfo = new StringBuilder();
+            if (!Validator.validateCity(city, cityInfo)) {
+                validationInfo += cityInfo + "\n";
+                validForm = false;
+            }
 
-            // Czyść pola tekstowe po dodaniu
-            nameTextField.clear();
-            surnameTextField.clear();
-            telTextField.clear();
-            cityTextField.clear();
-            ulicaTextField.clear();
-            nrDomuTextField.clear();
-            kodTextField.clear();
+            StringBuilder ulicaInfo = new StringBuilder();
+            if (!Validator.validateStreet(ulica, ulicaInfo)) {
+                validationInfo += ulicaInfo + "\n";
+                validForm = false;
+            }
+
+            StringBuilder nrDomuInfo = new StringBuilder();
+            if (!Validator.validateHouseNumber(nrDomu, nrDomuInfo)) {
+                validationInfo += ulicaInfo + "\n";
+                validForm = false;
+            }
+
+            StringBuilder postCodeInfo = new StringBuilder();
+            if (!Validator.validatePostalCode(kod, postCodeInfo)) {
+                validationInfo += postCodeInfo + "\n";
+                validForm = false;
+            }
+
+            if (!validForm) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Formularz zawiera błędy");
+                alert.setHeaderText("Popraw dane w formularzu:");
+                alert.setContentText(validationInfo);
+                alert.show();
+            } else {
+                Klient selectedKlient = tableView.getSelectionModel().selectedItemProperty().get();
+                long selectedId = selectedKlient.getId();
+                Klient klient = new Klient(selectedId, name, surname, nrTel, city, ulica, nrDomu, kod);
+                con.sendObject("klienciEdit", klient);
+
+                selectedKlient.setImie(name);
+                selectedKlient.setNazwisko(surname);
+                selectedKlient.setNr_tel(nrTel);
+                selectedKlient.setMiasto(city);
+
+                selectedKlient.setUlica(ulica);
+                selectedKlient.setNr_domu(nrDomu);
+                selectedKlient.setKod(kod);
+
+                tableView.refresh();
+
+                // Czyść pola tekstowe po dodaniu
+                nameTextField.clear();
+                surnameTextField.clear();
+                telTextField.clear();
+                cityTextField.clear();
+                ulicaTextField.clear();
+                nrDomuTextField.clear();
+                kodTextField.clear();
+            }
         });
 
         deleteButton.setOnAction(e -> {

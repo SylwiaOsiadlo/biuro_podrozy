@@ -16,6 +16,9 @@ public class AlbumForm {
 
     private final ObservableList<Album> albums = FXCollections.observableArrayList();
 
+    private String validationInfo = "";
+    private boolean validForm = true;
+
     private long lastIdFromDb = 0;
 
     public VBox getContent(ClientConnection con) {
@@ -72,20 +75,56 @@ public class AlbumForm {
         TableView<Album> tableView = new TableView<>();
 
         addButton.setOnAction(e -> {
+            validForm = true;
+            validationInfo = "";
+
             String name = nameTextField.getText();
             String genre = genreTextField.getText();
+
+            StringBuilder nameInfo = new StringBuilder();
+            if (!Validator.validateAlbumName(name, nameInfo)) {
+                validationInfo += nameInfo + "\n";
+                validForm = false;
+            }
+
+            StringBuilder genreInfo = new StringBuilder();
+            if (!Validator.validateAlbumGenre(genre, genreInfo)) {
+                validationInfo += genreInfo + "\n";
+                validForm = false;
+            }
+
+            StringBuilder quantityInfo = new StringBuilder();
+            if (!Validator.validateQuantity(quantityTextField.getText(), quantityInfo)) {
+                validationInfo += quantityInfo + "\n";
+                validForm = false;
+            }
+
+            StringBuilder priceInfo = new StringBuilder();
+            if (!Validator.validatePrice(cenaTextField.getText(), priceInfo)) {
+                validationInfo += priceInfo + "\n";
+                validForm = false;
+            }
+
             int quantity = Integer.parseInt(quantityTextField.getText());
             float cena = Float.parseFloat(cenaTextField.getText());
 
-            Album album = new Album(lastIdFromDb, name, genre, quantity, cena);
-            albums.add(album);
-            con.sendObject("plytyAdd", album);
+            if (!validForm) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Formularz zawiera błędy");
+                alert.setHeaderText("Popraw dane w formularzu:");
+                alert.setContentText(validationInfo);
+                alert.show();
+            } else {
+                Album album = new Album(lastIdFromDb, name, genre, quantity, cena);
+                albums.add(album);
+                con.sendObject("plytyAdd", album);
 
-            // Czyść pola tekstowe po dodaniu
-            nameTextField.clear();
-            genreTextField.clear();
-            quantityTextField.clear();
-            cenaTextField.clear();
+                // Czyść pola tekstowe po dodaniu
+                nameTextField.clear();
+                genreTextField.clear();
+                quantityTextField.clear();
+                cenaTextField.clear();
+            }
         });
 
         editButton.setOnAction(e -> {
