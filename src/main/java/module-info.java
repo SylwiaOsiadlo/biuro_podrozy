@@ -9,10 +9,11 @@ module com.psk.psk {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
 
-    opens com.psk.wypozyczalniaDVD_klient;
+    opens com.psk.wypozyczalniaDVD;
     requires lombok;
     requires java.persistence;
     requires java.sql;
+    requires org.apache.logging.log4j;
 
-    exports com.psk.wypozyczalniaDVD_klient;
+    exports com.psk.wypozyczalniaDVD;
 }

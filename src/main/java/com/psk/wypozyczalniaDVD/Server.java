@@ -1,17 +1,21 @@
-package com.psk.wypozyczalniaDVD_klient;
+package com.psk.wypozyczalniaDVD;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Server {
+
+    private static final Logger logger = LogManager.getLogger(Server.class);
 
     private static final int THREAD_POOL_SIZE = 10; // Rozmiar puli wątków
     private static boolean isRunning = true; // Flaga informująca o działaniu serwera
@@ -28,7 +32,7 @@ public class Server {
 
             while (isRunning) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Połączenie przychodzące z adresu: " + clientSocket.getInetAddress());
+                logger.info("Połączenie przychodzące z adresu: " + clientSocket.getInetAddress());
 
                 // Przekazanie połączenia do wątku w puli
                 executorService.execute(new RequestHandler(clientSocket));
@@ -474,9 +478,9 @@ public class Server {
             
             else if (request.startsWith("bye")) {
                 if (!clientSocket.isClosed()) {
-                    clientSocket.getOutputStream().close();
+                    /*clientSocket.getOutputStream().close();
                     clientSocket.getInputStream().close();
-                    clientSocket.close();
+                    clientSocket.close();*/
                 }
                 isClosed = true;
             }

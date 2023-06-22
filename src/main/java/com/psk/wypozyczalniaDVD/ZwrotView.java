@@ -1,4 +1,4 @@
-package com.psk.wypozyczalniaDVD_klient;
+package com.psk.wypozyczalniaDVD;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WypozyczenieView implements Serializable {
+public class ZwrotView implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +29,10 @@ public class WypozyczenieView implements Serializable {
     private String nazwaDVD;
     private String gatunekDVD;
     private int iloscSztuk;
+    private float cena;
 
     private LocalDate data_w; //data wypożyczenia
-    private LocalDate data_z; //data zwrotu planowana
+    private LocalDate data_z_planowana; //data zwrotu planowana
+    private LocalDate data_z; //data zwrotu
 
 }

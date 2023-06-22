@@ -1,4 +1,4 @@
-package com.psk.wypozyczalniaDVD_klient;
+package com.psk.wypozyczalniaDVD;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Data

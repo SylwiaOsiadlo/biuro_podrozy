@@ -1,4 +1,4 @@
-package com.psk.wypozyczalniaDVD_klient;
+package com.psk.wypozyczalniaDVD;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
