@@ -154,8 +154,8 @@ public class KlientForm {
                 alert.show();
             } else {
                 Klient klient = new Klient(lastIdFromDb, name, surname, nrTel, city, ulica, nrDomu, kod);
-                klienci.add(klient);
                 con.sendObject("klienciAdd", klient);
+                klienci.add(klient);
 
                 // Czyść pola tekstowe po dodaniu
                 nameTextField.clear();

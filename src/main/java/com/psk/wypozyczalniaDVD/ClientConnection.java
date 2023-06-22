@@ -121,6 +121,10 @@ public class ClientConnection {
         }
     }
 
+    boolean isConnected() {
+        return socket.isConnected();
+    }
+
     void closeConnection() throws IOException {
         if (socket == null)
             return;

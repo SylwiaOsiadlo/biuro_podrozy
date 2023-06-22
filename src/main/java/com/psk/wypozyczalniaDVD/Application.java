@@ -5,12 +5,15 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Application extends javafx.application.Application {
 
@@ -43,6 +46,14 @@ public class Application extends javafx.application.Application {
         Button btnZwroc = new Button("Zwróć DVD");
         VBox content = new VBox();
         VBox.setVgrow(content, Priority.ALWAYS);
+
+        String imagePath = Objects.requireNonNull(getClass().getResource("/appLogo.png")).toExternalForm();
+        Image image = new Image(imagePath);
+
+        ImageView imageView = new ImageView(image);
+        content.getChildren().add(imageView);
+        imageView.setTranslateX(200);
+        imageView.setTranslateY(100);
 
         // Ustawienie akcji po naciśnięciu przycisku
         btnDVD.setOnAction(e -> {

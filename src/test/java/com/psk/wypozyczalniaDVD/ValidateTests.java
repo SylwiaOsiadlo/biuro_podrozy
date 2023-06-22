@@ -3,7 +3,7 @@ package com.psk.wypozyczalniaDVD;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class MainTests {
+public class ValidateTests {
 
     @Test
     public void testValidateName() {
