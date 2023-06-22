@@ -5,6 +5,16 @@ CREATE TABLE album (
     quantity INT NOT NULL,
     cena DECIMAL(10, 2) NOT NULL
 );
+INSERT INTO album (name, genre, quantity, cena)
+VALUES ('Avengers: Endgame', 'Akcja', 10, 29.99);
+INSERT INTO album (name, genre, quantity, cena)
+VALUES ('Pulp Fiction', 'Kryminał', 5, 12.99);
+INSERT INTO album (name, genre, quantity, cena)
+VALUES ('Incepcja', 'Science Fiction', 3, 9.99);
+INSERT INTO album (name, genre, quantity, cena)
+VALUES ('The Shawshank Redemption', 'Dramat', 7, 14.99);
+INSERT INTO album (name, genre, quantity, cena)
+VALUES ('The Dark Knight', 'Akcja', 4, 11.99);
 
 CREATE TABLE osoba (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -16,6 +26,18 @@ CREATE TABLE osoba (
   nr_domu VARCHAR(255),
   kod_pocztowy VARCHAR(6)
 );
+INSERT INTO osoba (imie, nazwisko, nr_tel, miasto, ulica, nr_domu, kod_pocztowy)
+VALUES ('Jan', 'Kowalski', '123456789', 'Warszawa', 'Aleja Pokoju', '10', '00-001');
+INSERT INTO osoba (imie, nazwisko, nr_tel, miasto, ulica, nr_domu, kod_pocztowy)
+VALUES ('Anna', 'Nowak', '987654321', 'Kraków', 'ul. Główna', '5', '30-001');
+INSERT INTO osoba (imie, nazwisko, nr_tel, miasto, ulica, nr_domu, kod_pocztowy)
+VALUES ('Tomasz', 'Wójcik', '555444333', 'Gdańsk', 'ul. Morska', '15', '80-001');
+INSERT INTO osoba (imie, nazwisko, nr_tel, miasto, ulica, nr_domu, kod_pocztowy)
+VALUES ('Monika', 'Lis', '111222333', 'Poznań', 'ul. Ogrodowa', '20', '60-001');
+INSERT INTO osoba (imie, nazwisko, nr_tel, miasto, ulica, nr_domu, kod_pocztowy)
+VALUES ('Piotr', 'Szymański', '999888777', 'Wrocław', 'ul. Wiejska', '8', '50-001');
+
+
 CREATE TABLE wypozyczenie (
   id INT AUTO_INCREMENT PRIMARY KEY,
   id_plyta INT,
@@ -54,5 +76,4 @@ SELECT osoba.imie, osoba.nazwisko, osoba.nr_tel, album.name, album.genre, wypozy
 FROM osoba
          JOIN wypozyczenie ON osoba.id = wypozyczenie.id_klient
          JOIN album ON wypozyczenie.id_plyta = album.id;
-
 
