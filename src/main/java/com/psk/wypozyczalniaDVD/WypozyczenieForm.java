@@ -39,12 +39,14 @@ public class WypozyczenieForm {
         Label dataLabel = new Label("Data wypożyczenia:");
         DatePicker datePicker = new DatePicker();
         datePicker.setValue(LocalDate.now());
+        datePicker.setEditable(false);
 
         TextField dataTextField = new TextField();
 
         Label zwrotLabel = new Label("Data zwrotu planowana:");
 
         DatePicker zwrotDatePicker = new DatePicker();
+        zwrotDatePicker.setEditable(false);
         zwrotDatePicker.setValue(LocalDate.now());
 
         TextField zwrotTextField = new TextField();
@@ -113,11 +115,8 @@ public class WypozyczenieForm {
             LocalDate dataWypozyczenia = datePicker.getValue();
             LocalDate dataZwrotuPlanowana = zwrotDatePicker.getValue();
 
-            String dateInfo = "";
-            String zwrotDataInfo = "";
-
             if (dataWypozyczenia == null) {
-                dateInfo += "Podaj właściwy format daty wypożyczenia.\n";
+                validationInfo += "Podaj właściwy format daty wypożyczenia.\n";
                 validForm = false;
             }
 
@@ -126,69 +125,71 @@ public class WypozyczenieForm {
                 validForm = false;
             }
 
-            if (selectedAlbum != null && selectedKlient != null && validForm) {
-                long dvd = selectedAlbum.getId();
-                long client = selectedKlient.getId();
+            if (selectedAlbum != null && selectedKlient != null) {
+                if (validForm) {
+                    long dvd = selectedAlbum.getId();
+                    long client = selectedKlient.getId();
 
-                int iloscWypozyczen = 0;
-                int iloscSztuk = 0;
-                boolean correctIlosc = true;
-                for (Wypozyczenie element : receivedList) {
-                    if (element.getId_plyta() == dvd) {
-                        iloscWypozyczen++;
+                    int iloscWypozyczen = 0;
+                    int iloscSztuk = 0;
+                    boolean correctIlosc = true;
+                    for (Wypozyczenie element : receivedList) {
+                        if (element.getId_plyta() == dvd) {
+                            iloscWypozyczen++;
+                        }
+                    }
+                    for (WypozyczenieView element : receivedViewList) {
+                        if (element.getIdDVD() == dvd) {
+                            iloscSztuk = element.getIloscSztuk();
+                            break;
+                        }
+                    }
+
+                    boolean correctDate = true;
+                    if (dataZwrotuPlanowana.isBefore(dataWypozyczenia)) {
+                        correctDate = false;
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Operacja niedozwolona");
+                        alert.setHeaderText("Planowana data oddania nie może być wcześniejsza niż data wypożyczenia.");
+                        alert.show();
+                    }
+
+                    if (iloscSztuk < iloscWypozyczen) {
+                        correctIlosc = false;
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Operacja niedozwolona");
+                        alert.setHeaderText("Wybrana płyta DVD nie jest dostępna do wypożyczenia.");
+                        alert.show();
+                    }
+
+                    if (correctIlosc && correctDate) {
+                        Wypozyczenie wypozyczenie = new Wypozyczenie(lastIdFromDb, dvd, client, dataWypozyczenia, dataZwrotuPlanowana);
+                        //wypozyczenia.add(wypozyczenie);
+                        con.sendObject("wypozyczenieAdd", wypozyczenie);
+
+                        List<WypozyczenieView> receivedListAdd = (List<WypozyczenieView>) con.requestObject("wypozyczenieViewList");
+
+                        wypozyczenia.clear();
+                        wypozyczenia.addAll(receivedListAdd);
+
+                        // Czyść pola tekstowe po dodaniu
+                        dvdTextField.clear();
+                        clientTextField.clear();
+                        dataTextField.clear();
+                        zwrotTextField.clear();
                     }
                 }
-                for (WypozyczenieView element : receivedViewList) {
-                    if (element.getIdDVD() == dvd) {
-                        iloscSztuk = element.getIloscSztuk();
-                        break;
-                    }
-                }
-
-                boolean correctDate = true;
-                if (dataZwrotuPlanowana.isBefore(dataWypozyczenia)) {
-                    correctDate = false;
+                else {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("Operacja niedozwolona");
-                    alert.setHeaderText("Planowana data oddania nie może być wcześniejsza niż data wypożyczenia.");
+                    alert.setHeaderText("Proszę podać właściwy format daty.");
                     alert.show();
-                }
-
-                if (iloscSztuk < iloscWypozyczen) {
-                    correctIlosc = false;
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Operacja niedozwolona");
-                    alert.setHeaderText("Wybrana płyta DVD nie jest dostępna do wypożyczenia.");
-                    alert.show();
-                }
-
-                if (correctIlosc && correctDate) {
-                    Wypozyczenie wypozyczenie = new Wypozyczenie(lastIdFromDb, dvd, client, dataWypozyczenia, dataZwrotuPlanowana);
-                    //wypozyczenia.add(wypozyczenie);
-                    con.sendObject("wypozyczenieAdd", wypozyczenie);
-
-                    List<WypozyczenieView> receivedListAdd = (List<WypozyczenieView>) con.requestObject("wypozyczenieViewList");
-
-                    wypozyczenia.clear();
-                    wypozyczenia.addAll(receivedListAdd);
-
-                    // Czyść pola tekstowe po dodaniu
-                    dvdTextField.clear();
-                    clientTextField.clear();
-                    dataTextField.clear();
-                    zwrotTextField.clear();
                 }
             }
-            else if ((selectedAlbum != null || selectedKlient != null) && validForm) {
+            else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Operacja niedozwolona");
                 alert.setHeaderText("Wybierz płytę DVD do wypożyczenia z listy oraz wybierz klienta wypożyczającego.");
-                alert.show();
-            }
-            else if (!validForm) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Operacja niedozwolona");
-                alert.setHeaderText("Proszę podać właściwy format daty.");
                 alert.show();
             }
         });

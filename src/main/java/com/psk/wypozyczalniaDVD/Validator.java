@@ -66,7 +66,7 @@ public class Validator {
             return false;
         }
 
-        if (!houseNumber.matches("[0-9/\\-]+")) {
+        if (!houseNumber.matches("[1-9]{1}[0-9]{0,3}[a-zA-Z]{0,2}[\\\\/]?[1-9]{0,2}")) {
             outInfo.append("Pole 'Nr domu' zawiera nieprawidłowe znaki!");
             return false;
         }
