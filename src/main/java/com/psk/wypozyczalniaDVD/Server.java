@@ -75,23 +75,24 @@ public class Server {
                 }
 
                 dbCon.closeDbConnect();
-                System.out.println("Rozlaczono klienta.");
+                logger.info("Rozlaczono klienta: " + clientSocket.getInetAddress());
             } catch (IOException e) {
                 e.printStackTrace();
+                logger.error(e.getMessage());
             } catch (ClassNotFoundException e) {
+                logger.error(e.getMessage());
                 throw new RuntimeException(e);
             }
         }
 
         private void handleRequest(Socket clientSocket) throws IOException, ClassNotFoundException {
-            //clientSocket.setSoTimeout(1000);
             DataInputStream dis = new DataInputStream(clientSocket.getInputStream());
             String request = dis.readUTF();
 
             System.out.println("Odebrano żądanie: " + request);
 
             if (request.contains("plytyList")) {
-                // Tworzenie przykładowej listy
+                // Tworzenie listy do wysłania klientowi
                 List<Album> list = new ArrayList<>();
 
                 try {
@@ -109,6 +110,7 @@ public class Server {
                         list.add(album);
                     }
                 }catch (SQLException e) {
+                    logger.error("Błąd zapytania SQL dla: plytyList.");
                     throw new RuntimeException(e);
                 }
 
@@ -133,10 +135,10 @@ public class Server {
                         System.out.println("Album został pomyślnie dodany do bazy danych.");
                     }
                     else {
-                        System.out.println(); // response
+                        logger.warn("Nie udało się dodać Albumu do bazy danych.");
                     }
                 }catch (SQLException | ClassNotFoundException e) {
-                    System.out.println(e);
+                    logger.error(e.getMessage());
                 }
             }
             else if (request.contains("plytyEdit")) {
@@ -156,10 +158,10 @@ public class Server {
                     if (rowsUpdated > 0) {
                         System.out.println("Album został pomyślnie zaktualizowany w bazie danych.");
                     } else {
-                        System.out.println("Nie znaleziono albumu o podanym identyfikatorze.");
+                        logger.warn("Nie znaleziono albumu o podanym identyfikatorze.");
                     }
                 }catch (SQLException | ClassNotFoundException e) {
-                    System.out.println(e);
+                    logger.error(e.getMessage());
                 }
             }
             else if (request.contains("plytyDel")) {
@@ -174,14 +176,14 @@ public class Server {
                     if (rowsUpdated > 0) {
                         System.out.println("Album został pomyślnie uzunięty z bazy danych.");
                     } else {
-                        System.out.println("Nie znaleziono albumu o podanym identyfikatorze.");
+                        logger.warn("Nie znaleziono albumu o podanym identyfikatorze.");
                     }
                 }catch (SQLException | ClassNotFoundException e) {
-                    System.out.println(e);
+                    logger.error(e.getMessage());
                 }
             }
             else if (request.contains("klienciList")) {
-                // Tworzenie przykładowej listy
+                // Tworzenie listy
                 List<Klient> list = new ArrayList<>();
 
                 try {
@@ -202,6 +204,7 @@ public class Server {
                         list.add(klient);
                     }
                 }catch (SQLException e) {
+                    logger.error(e.getMessage());
                     throw new RuntimeException(e);
                 }
 
@@ -232,7 +235,7 @@ public class Server {
                         System.out.println(); // response
                     }
                 }catch (SQLException | ClassNotFoundException e) {
-                    System.out.println(e);
+                    logger.error(e.getMessage());
                 }
             }
             else if (request.contains("klienciEdit")) {
@@ -256,10 +259,10 @@ public class Server {
                     if (rowsUpdated > 0) {
                         System.out.println("Klient został pomyślnie zaktualizowany w bazie danych.");
                     } else {
-                        System.out.println("Nie znaleziono klienta o podanym identyfikatorze.");
+                        logger.warn("Nie znaleziono klienta o podanym identyfikatorze.");
                     }
                 }catch (SQLException | ClassNotFoundException e) {
-                    System.out.println(e);
+                    logger.error(e.getMessage());
                 }
             }
             else if (request.contains("klienciDel")) {
@@ -274,16 +277,16 @@ public class Server {
                     if (rowsUpdated > 0) {
                         System.out.println("Klient został pomyślnie uzunięty z bazy danych.");
                     } else {
-                        System.out.println("Nie znaleziono klienta o podanym identyfikatorze.");
+                        logger.warn("Nie znaleziono klienta o podanym identyfikatorze.");
                     }
                 }catch (SQLException | ClassNotFoundException e) {
-                    System.out.println(e);
+                    logger.error(e.getMessage());
                 }
             }
             /// =========== Wypozyczenie
 
             else if (request.contains("wypozyczenieList")) {
-                // Tworzenie przykładowej listy
+                // Tworzenie listy
                 List<Wypozyczenie> list = new ArrayList<>();
 
                 try {
@@ -301,6 +304,7 @@ public class Server {
                         list.add(wypozyczenie);
                     }
                 }catch (SQLException e) {
+                    logger.error(e.getMessage());
                     throw new RuntimeException(e);
                 }
 
@@ -309,7 +313,7 @@ public class Server {
                 objectOutputStream.flush();
             }
             else if (request.contains("wypozyczenieViewList")) {
-                // Tworzenie przykładowej listy
+                // Tworzenie listy
                 List<WypozyczenieView> list = new ArrayList<>();
 
                 try {
@@ -336,6 +340,7 @@ public class Server {
                         list.add(wypozyczenieView);
                     }
                 }catch (SQLException e) {
+                    logger.error(e.getMessage());
                     throw new RuntimeException(e);
                 }
 
@@ -357,20 +362,20 @@ public class Server {
 
                     int rowsInserted = statement.executeUpdate();
                     if (rowsInserted > 0) {
-                        System.out.println("Wypozyczenie został pomyślnie dodany do bazy danych.");
+                        System.out.println("Wypożyczenie zostało pomyślnie dodany do bazy danych.");
                     }
                     else {
-                        System.out.println(); // response
+                        logger.warn("Nie udało się dodać wypożyczenia do bazy danych.");
                     }
                 }catch (SQLException | ClassNotFoundException e) {
-                    System.out.println(e);
+                    logger.error(e.getMessage());
                 }
             }
             
             /// =========== Zwrot
 
             else if (request.contains("zwrotViewList")) {
-                // Tworzenie przykładowej listy
+                // Tworzenie listy
                 List<ZwrotView> list = new ArrayList<>();
 
                 try {
@@ -396,6 +401,7 @@ public class Server {
                         list.add(zwrotView);
                     }
                 }catch (SQLException e) {
+                    logger.error(e.getMessage());
                     throw new RuntimeException(e);
                 }
 
@@ -456,32 +462,27 @@ public class Server {
 
                             int rowsUpdated = statementDel.executeUpdate();
                             if (rowsUpdated > 0) {
-                                System.out.println("Wypozyczenie zostało pomyślnie uzunięty z bazy danych.");
+                                System.out.println("Wypożyczenie zostało pomyślnie uzunięty z bazy danych.");
                             } else {
-                                System.out.println("Nie znaleziono wypożyczenia o podanym identyfikatorze.");
+                                logger.warn("Nie znaleziono wypożyczenia o podanym identyfikatorze.");
                             }
                         }
                         else {
-                            System.out.println(); // response
+                            logger.warn("Nie udało się dodać DVD do bazy danych.");
                         }
 
                     }
                     else {
-                        System.out.println("Nie znaleziono wypożyczenia o podanym identyfikatorze.");
+                        logger.warn("Nie znaleziono wypożyczenia o podanym identyfikatorze.");
                     }
 
                 }catch (SQLException | ClassNotFoundException e) {
-                    System.out.println(e);
+                    logger.error(e.getMessage());
                 }
             }
             
-            
             else if (request.startsWith("bye")) {
-                if (!clientSocket.isClosed()) {
-                    /*clientSocket.getOutputStream().close();
-                    clientSocket.getInputStream().close();
-                    clientSocket.close();*/
-                }
+                // połączenie zamyka klient
                 isClosed = true;
             }
         }
