@@ -7,12 +7,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
 public class Application extends javafx.application.Application {
 
     private final ClientConnection clientConnection;
+
+    private static final Logger logger = LogManager.getLogger(Application.class);
 
     public Application() {
         clientConnection = new ClientConnection();
@@ -79,7 +83,6 @@ public class Application extends javafx.application.Application {
         layout.getChildren().add(btnNav);
 
         Separator separator = new Separator();
-        //separator.setStyle("-fx-border-width: 1px; -fx-border-color: black;");
 
         layout.getChildren().add(separator);
         layout.getChildren().add(content);
@@ -93,6 +96,7 @@ public class Application extends javafx.application.Application {
                 clientConnection.sendCommand("bye");
                 clientConnection.closeConnection();
             } catch (IOException e) {
+                logger.error(e.getMessage());
                 throw new RuntimeException(e);
             }
             Platform.exit();

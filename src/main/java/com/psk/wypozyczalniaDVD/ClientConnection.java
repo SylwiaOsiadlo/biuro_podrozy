@@ -1,6 +1,8 @@
 package com.psk.wypozyczalniaDVD;
 
 import javafx.scene.control.Alert;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.net.ConnectException;
@@ -9,10 +11,11 @@ import java.net.SocketTimeoutException;
 
 public class ClientConnection {
 
+    private static final Logger logger = LogManager.getLogger(ClientConnection.class);
+
     private static Socket socket;
     private static BufferedReader reader;
     private static OutputStream outputStream;
-    private static ObjectOutputStream objectOutputStream;
 
     public void connect(String hostname, int port) {
         // Nawiązanie połączenia z serwerem przy uruchomieniu aplikacji
@@ -22,9 +25,7 @@ public class ClientConnection {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             outputStream = socket.getOutputStream();
 
-            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-
-            System.out.println("Połączono z serwerem");
+            logger.info("Połączono z serwerem.");
         } catch (ConnectException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Błąd połączenia");
@@ -32,9 +33,11 @@ public class ClientConnection {
             alert.setContentText(e.getMessage());
 
             alert.show();
+            logger.error("Błąd połączenia: " + e.getMessage());
         }
         catch (IOException e) {
             e.printStackTrace();
+            logger.error(e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Błąd połączenia");
             alert.setHeaderText("Wystąpił nieznany błąd połączenia.");
@@ -58,21 +61,18 @@ public class ClientConnection {
             dos.writeUTF(objectName);
             dos.flush();
 
-            /*outputStream.flush();
-            PrintWriter writer = new PrintWriter(outputStream, true);
-            writer.flush();
-            writer.println(objectName);*/
-
             // Odczytywanie odpowiedzi serwera
             ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
             return objectInputStream.readObject();
         } catch (SocketTimeoutException e) {
+            logger.error(e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Błąd połączenia");
             alert.setHeaderText("Przekroczono limit czasu połączenia dla tego żądania.");
             alert.show();
             return null;
         } catch (IOException | ClassNotFoundException e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
             return null;
         }
@@ -87,16 +87,14 @@ public class ClientConnection {
             dos.writeUTF(command);
             dos.flush();
 
-            /*outputStream.flush();
-            PrintWriter writer = new PrintWriter(outputStream, true);
-            writer.flush();
-            writer.println(command);*/
         } catch (SocketTimeoutException e) {
+            logger.error(e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Błąd połączenia");
             alert.setHeaderText("Przekroczono limit czasu połączenia dla tego żądania.");
             alert.show();
         } catch (IOException e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -106,21 +104,20 @@ public class ClientConnection {
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
             dos.writeUTF(objectName);
             dos.flush();
-            /*PrintWriter writer = new PrintWriter(outputStream, false);
-            writer.println(objectName);
-            writer.flush();*/
 
             ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             oos.writeObject(obj);
             oos.flush();
             outputStream.flush();
         } catch (SocketTimeoutException e) {
+            logger.error(e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Błąd połączenia");
             alert.setHeaderText("Przekroczono limit czasu połączenia dla tego żądania.");
             alert.show();
         }  catch (IOException e) {
             e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -136,6 +133,6 @@ public class ClientConnection {
 
         reader.close();
         socket.close();
-        System.out.println("Zamknięto połączenie z serwerem");
+        logger.info("Zamknięto połączenie z serwerem.");
     }
 }

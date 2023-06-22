@@ -128,28 +128,64 @@ public class AlbumForm {
         });
 
         editButton.setOnAction(e -> {
+            validForm = true;
+            validationInfo = "";
+
             String name = nameTextField.getText();
             String genre = genreTextField.getText();
+
+            StringBuilder nameInfo = new StringBuilder();
+            if (!Validator.validateAlbumName(name, nameInfo)) {
+                validationInfo += nameInfo + "\n";
+                validForm = false;
+            }
+
+            StringBuilder genreInfo = new StringBuilder();
+            if (!Validator.validateAlbumGenre(genre, genreInfo)) {
+                validationInfo += genreInfo + "\n";
+                validForm = false;
+            }
+
+            StringBuilder quantityInfo = new StringBuilder();
+            if (!Validator.validateQuantity(quantityTextField.getText(), quantityInfo)) {
+                validationInfo += quantityInfo + "\n";
+                validForm = false;
+            }
+
+            StringBuilder priceInfo = new StringBuilder();
+            if (!Validator.validatePrice(cenaTextField.getText(), priceInfo)) {
+                validationInfo += priceInfo + "\n";
+                validForm = false;
+            }
+
             int quantity = Integer.parseInt(quantityTextField.getText());
             float cena = Float.parseFloat(cenaTextField.getText());
 
-            Album selectedAlbum = tableView.getSelectionModel().selectedItemProperty().get();
-            long selectedId = selectedAlbum.getId();
-            Album album = new Album(selectedId, name, genre, quantity, cena);
+            if (!validForm) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Formularz zawiera błędy");
+                alert.setHeaderText("Popraw dane w formularzu:");
+                alert.setContentText(validationInfo);
+                alert.show();
+            } else {
+                Album selectedAlbum = tableView.getSelectionModel().selectedItemProperty().get();
+                long selectedId = selectedAlbum.getId();
+                Album album = new Album(selectedId, name, genre, quantity, cena);
 
-            selectedAlbum.setName(name);
-            selectedAlbum.setGenre(genre);
-            selectedAlbum.setQuantity(quantity);
-            selectedAlbum.setCena(cena);
-            tableView.refresh();
+                selectedAlbum.setName(name);
+                selectedAlbum.setGenre(genre);
+                selectedAlbum.setQuantity(quantity);
+                selectedAlbum.setCena(cena);
+                tableView.refresh();
 
-            con.sendObject("plytyEdit", album);
+                con.sendObject("plytyEdit", album);
 
-            // Czyść pola tekstowe po dodaniu
-            nameTextField.clear();
-            genreTextField.clear();
-            quantityTextField.clear();
-            cenaTextField.clear();
+                // Czyść pola tekstowe po dodaniu
+                nameTextField.clear();
+                genreTextField.clear();
+                quantityTextField.clear();
+                cenaTextField.clear();
+            }
         });
 
         deleteButton.setOnAction(e -> {
